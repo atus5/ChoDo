@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     git curl libpng-dev libjpeg-dev libfreetype6-dev libjpeg62-turbo-dev \
     libmcrypt-dev libonig-dev libxml2-dev zip unzip \
-    && docker-php-ext-install pdo_mysql gd tokenizer xml mbstring \
+    && docker-php-ext-install -j$(nproc) pdo_mysql gd xml mbstring \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
