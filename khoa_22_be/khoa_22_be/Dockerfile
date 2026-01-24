@@ -14,6 +14,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . .
 
+# Remove symlink if exists
+RUN rm -rf public/storage 2>/dev/null; mkdir -p public/storage bootstrap/cache; chmod -R 777 public/storage bootstrap/cache storage
+
 RUN composer install --no-interaction --no-dev --optimize-autoloader 2>&1 || true
 
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache 2>&1 || true
