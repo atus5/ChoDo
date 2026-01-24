@@ -1,7 +1,7 @@
 # Frontend
-khoa_22_fe/node_modules/
-khoa_22_fe/dist/
-khoa_22_fe/.env.local
+khoa_22_fe/frontend/node_modules/
+khoa_22_fe/frontend/dist/
+khoa_22_fe/frontend/.env.local
 
 # Backend
 khoa_22_be/khoa_22_be/vendor/

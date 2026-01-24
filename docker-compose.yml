@@ -48,13 +48,13 @@ services:
 
   frontend:
     build:
-      context: ./khoa_22_fe/khoan_22_fe\ -\ Copy
+      context: ./khoa_22_fe/frontend
       dockerfile: Dockerfile
     container_name: khoa_22_frontend
     ports:
       - "5174:5174"
     volumes:
-      - ./khoa_22_fe/khoan_22_fe\ -\ Copy:/app
+      - ./khoa_22_fe/frontend:/app
       - /app/node_modules
     depends_on:
       - backend
