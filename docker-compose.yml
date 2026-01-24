@@ -21,8 +21,8 @@ services:
 
   backend:
     build:
-      context: ./khoa_22_be/khoa_22_be
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./khoa_22_be/khoa_22_be/Dockerfile
     container_name: khoa_22_backend
     environment:
       APP_NAME: Laravel
@@ -48,8 +48,8 @@ services:
 
   frontend:
     build:
-      context: ./khoa_22_fe/frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./khoa_22_fe/frontend/Dockerfile
     container_name: khoa_22_frontend
     ports:
       - "5174:5174"
