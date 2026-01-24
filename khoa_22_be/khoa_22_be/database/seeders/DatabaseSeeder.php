@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             VoucherSeeder::class,
             ChucNangSeeder::class,
             DonHangSeeder::class,
+            ChiTietKhoGaSeeder::class,
         ]);
     }
 }
