@@ -2,11 +2,13 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-COPY khoa_22_fe/frontend/package*.json ./
+# Copy all frontend files first
+COPY khoa_22_fe/frontend/ /temp/
+
+# Copy to /app
+RUN cp -r /temp/* /app/ && rm -rf /temp/
 
 RUN npm install
-
-COPY khoa_22_fe/frontend/ .
 
 EXPOSE 5174
 
