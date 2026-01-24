@@ -1,0 +1,12 @@
+vendor/
+.git/
+.gitignore
+.env
+.env.local
+.env.*.local
+node_modules/
+storage/logs/*
+bootstrap/cache/*
+public/storage/*
+.DS_Store
+*.log
