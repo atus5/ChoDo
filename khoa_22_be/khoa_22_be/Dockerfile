@@ -14,6 +14,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . .
 
+# Remove public/storage symlink if it exists (it will be recreated by storage:link command)
+RUN rm -rf /app/public/storage 2>/dev/null || true
+
 # Remove symlink if exists
 RUN rm -rf public/storage 2>/dev/null; mkdir -p public/storage bootstrap/cache; chmod -R 777 public/storage bootstrap/cache storage
 
