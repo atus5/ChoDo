@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:8.0
@@ -9,7 +7,6 @@ services:
       MYSQL_DATABASE: khoa_22
       MYSQL_USER: khoa_22_user
       MYSQL_PASSWORD: khoa_22_pass
-      MYSQL_PORT: 3308
     ports:
       - "3308:3306"
     volumes:
@@ -30,7 +27,6 @@ services:
     environment:
       APP_NAME: Laravel
       APP_ENV: local
-      APP_KEY: base64:t3s7K9mL2pQ4rX5vN8wY1uA6sD4fG7hJ9kL1mN0oP
       APP_DEBUG: "true"
       APP_URL: http://localhost:8000
       DB_CONNECTION: mysql
@@ -52,13 +48,13 @@ services:
 
   frontend:
     build:
-      context: ./khoa_22_fe\ -\ Copy/khoan_22_fe\ -\ Copy
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: khoa_22_frontend
     ports:
       - "5174:5174"
     volumes:
-      - ./khoa_22_fe\ -\ Copy/khoan_22_fe\ -\ Copy:/app
+      - ./frontend:/app
       - /app/node_modules
     depends_on:
       - backend
