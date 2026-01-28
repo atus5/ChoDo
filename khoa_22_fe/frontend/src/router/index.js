@@ -51,6 +51,12 @@ const routes = [
         meta: { layout: "client" },
     },
     {
+        path: "/dat-truoc-kho-ga/:id",
+        component: () => import("../components/Client/DatTruocKhoGa/index.vue"),
+        meta: { layout: "client" },
+        props: true,
+    },
+    {
         path: "/chi-tiet-phim/:id_phim",
         component: () => import("../components/Client/ChiTietPhim/index.vue"),
         meta: { layout: "client" },
@@ -149,7 +155,13 @@ const routes = [
     {
         path: "/admin/phim",
         component: () => import("../components/Admin/Phim/index.vue"),
-        beforeEnter: checkAdmin,
+        // beforeEnter: checkAdmin, // Temporarily disabled for testing
+        meta: { layout: "default" },
+    },
+    {
+        path: "/test-api",
+        component: () => import("../components/TestAPI.vue"),
+        meta: { layout: "blank" },
     },
     {
         path: "/admin/ve",

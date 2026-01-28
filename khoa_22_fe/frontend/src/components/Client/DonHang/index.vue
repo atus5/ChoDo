@@ -10,7 +10,7 @@
                 </div>
                 <div class="text-end">
                     <span class="badge bg-white text-danger px-4 py-2 fs-6 mb-2 d-inline-block" style="border-radius: 20px;">
-                        <i class="fa-solid fa-circle-check me-2"></i>Chờ thanh toán
+                        <i class="fa-solid fa-circle-check me-2"></i>{{ paymentStatus === 'paid' ? 'Đã thanh toán' : 'Chờ thanh toán' }}
                     </span>
                     <p class="text-white-50 mb-0 mt-2">{{ formatDate(new Date()) }}</p>
                 </div>
@@ -18,6 +18,12 @@
         </div>
 
         <div class="row g-4">
+            <div v-if="isReadOnly" class="col-12">
+                <div class="alert alert-success border-0 shadow-sm">
+                    <i class="fa-solid fa-circle-check me-2"></i>
+                    Đơn hàng đã thanh toán. Thông tin chỉ để xem.
+                </div>
+            </div>
             <!-- Left Column - Product Details & Payment -->
             <div class="col-lg-8">
                 <!-- Product Card -->
@@ -55,7 +61,7 @@
                         <h5 class="card-title fw-bold mb-4">
                             <i class="fa-solid fa-truck text-danger me-2"></i>Thông Tin Giao Hàng
                         </h5>
-                        <div class="row g-4">
+                        <fieldset :disabled="isReadOnly" class="row g-4">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Người nhận:</label>
                                 <input v-model="delivery.recipient" type="text" class="form-control" placeholder="Nhập tên người nhận">
@@ -80,7 +86,7 @@
                                 <label class="form-label fw-bold">Ghi chú giao hàng (Tùy chọn):</label>
                                 <input v-model="delivery.notes" type="text" class="form-control" placeholder="VD: Gọi trước khi giao">
                             </div>
-                        </div>
+                        </fieldset>
                     </div>
                 </div>
 
@@ -90,7 +96,8 @@
                         <h5 class="card-title fw-bold mb-4">
                             <i class="fa-solid fa-credit-card text-danger me-2"></i>Chọn Phương Thức Thanh Toán
                         </h5>
-                        
+
+                        <fieldset :disabled="isReadOnly">
                         <!-- Payment Methods -->
                         <div class="row g-3">
                             <!-- Thẻ Ngân Hàng -->
@@ -192,6 +199,7 @@
                                 </div>
                             </div>
                         </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
@@ -233,7 +241,7 @@
                 </div>
 
                 <!-- Promo Code -->
-                <div class="card border-0 shadow-lg mb-4" style="border-radius: 15px;">
+                <div v-if="!isReadOnly" class="card border-0 shadow-lg mb-4" style="border-radius: 15px;">
                     <div class="card-body p-4">
                         <h6 class="fw-bold mb-3">🎟️ Mã Khuyến Mãi (Tùy Chọn)</h6>
                         <div class="input-group">
@@ -250,7 +258,7 @@
                         <button @click="goBack" class="btn btn-outline-secondary fw-bold py-3">
                             <i class="fa-solid fa-arrow-left me-2"></i>Quay Lại
                         </button>
-                        <button @click="submitOrder" class="btn btn-danger fw-bold py-3" style="font-size: 18px;">
+                        <button v-if="!isReadOnly" @click="submitOrder" class="btn btn-danger fw-bold py-3" style="font-size: 18px;">
                             <i class="fa-solid fa-credit-card me-2"></i>Thanh Toán {{ formatVND(getTotal()) }}
                         </button>
                         <p class="text-muted text-center small mb-0">Bằng cách tiếp tục, bạn đồng ý với <a href="#" class="text-danger">Điều khoản sử dụng</a></p>
@@ -265,6 +273,7 @@
 import axios from 'axios';
 
 export default {
+    props: ["id"],
     data() {
         return {
             orderData: {
@@ -278,6 +287,7 @@ export default {
                 tong_tien: 0,
                 ghi_chu: ''
             },
+            paymentStatus: 'pending',
             delivery: {
                 recipient: '',
                 phone: '',
@@ -312,45 +322,148 @@ export default {
         this.loadOrderData();
     },
 
+    computed: {
+        isReadOnly() {
+            return ['paid', 'delivered'].includes(this.paymentStatus);
+        }
+    },
+
     methods: {
-        loadOrderData() {
+        async loadOrderData() {
             const savedData = sessionStorage.getItem('orderData');
-            console.log('Saved data:', savedData);
+            const savedStatus = sessionStorage.getItem('orderStatus');
+            if (savedStatus) {
+                this.paymentStatus = savedStatus;
+            } else {
+                this.paymentStatus = 'pending';
+            }
+
             if (savedData) {
                 try {
                     this.orderData = JSON.parse(savedData);
-                    console.log('Order data loaded:', this.orderData);
+                    // Chỉ set pending khi không có trạng thái lưu sẵn
+                    if (!savedStatus) {
+                        this.paymentStatus = 'pending';
+                        sessionStorage.setItem('orderStatus', 'pending');
+                    }
+                    this.delivery = {
+                        recipient: this.orderData.ten_nguoi_nhan || this.delivery.recipient,
+                        phone: this.orderData.sdt || this.delivery.phone,
+                        address: this.orderData.dia_chi || this.delivery.address,
+                        method: this.delivery.method,
+                        notes: this.orderData.ghi_chu || this.delivery.notes,
+                    };
+                    return;
                 } catch (e) {
                     console.error('Error parsing order data:', e);
-                    this.orderData = {
-                        id_san_pham: null,
-                        ten_san_pham: 'Khô Gà Chộ Đó',
-                        hinh_anh: 'https://voz.vn/attachments/1000016571-jpg.3225622/',
-                        vi: 'Cay',
-                        kich_thuoc: 'Vừa (500g)',
-                        so_luong: 1,
-                        gia_don_vi: 150000,
-                        tong_tien: 150000,
-                        ghi_chu: ''
-                    };
                 }
-            } else {
-                // Default data nếu không có sessionStorage
-                this.orderData = {
-                    id_san_pham: null,
-                    ten_san_pham: 'Khô Gà Chộ Đó',
-                    hinh_anh: 'https://voz.vn/attachments/1000016571-jpg.3225622/',
-                    vi: 'Cay',
-                    kich_thuoc: 'Vừa (500g)',
-                    so_luong: 1,
-                    gia_don_vi: 150000,
-                    tong_tien: 150000,
-                    ghi_chu: ''
-                };
             }
+
+            const orderId = Number(this.id);
+            const preorders = JSON.parse(localStorage.getItem('preorderOrders') || '[]');
+            const paidOrders = JSON.parse(localStorage.getItem('orderHistory') || '[]');
+
+            const paidFound = paidOrders.find((item) => Number(item.id) === orderId);
+            if (paidFound) {
+                this.paymentStatus = paidFound.trang_thai || 'paid';
+                this.orderData = {
+                    id_san_pham: paidFound.id,
+                    ten_san_pham: paidFound.ten_san_pham,
+                    hinh_anh: paidFound.hinh_anh,
+                    vi: paidFound.vi,
+                    kich_thuoc: paidFound.kich_thuoc,
+                    so_luong: paidFound.so_luong,
+                    gia_don_vi: paidFound.gia_don_vi,
+                    tong_tien: paidFound.tong_tien,
+                    ghi_chu: paidFound.ghi_chu || ''
+                };
+                this.delivery = {
+                    recipient: paidFound.ten_nguoi_nhan || '',
+                    phone: paidFound.sdt || '',
+                    address: paidFound.dia_chi || '',
+                    method: 'express',
+                    notes: paidFound.ghi_chu || ''
+                };
+                return;
+            }
+
+            const found = preorders.find((item) => Number(item.id) === orderId);
+            if (found) {
+                this.paymentStatus = found.trang_thai || 'preorder';
+                this.orderData = {
+                    id_san_pham: found.id,
+                    ten_san_pham: found.ten_san_pham,
+                    hinh_anh: found.hinh_anh,
+                    vi: found.vi,
+                    kich_thuoc: found.kich_thuoc,
+                    so_luong: found.so_luong,
+                    gia_don_vi: found.gia_don_vi,
+                    tong_tien: found.tong_tien,
+                    ghi_chu: found.ghi_chu || ''
+                };
+                this.delivery = {
+                    recipient: found.ten_nguoi_nhan || '',
+                    phone: found.sdt || '',
+                    address: found.dia_chi || '',
+                    method: 'express',
+                    notes: found.ghi_chu || ''
+                };
+                return;
+            }
+
+            const token = localStorage.getItem('key_client');
+            if (token && Number.isFinite(orderId)) {
+                try {
+                    const res = await axios.get(`/api/client/lich-su-dat-hang/${orderId}`, {
+                        headers: {
+                            Authorization: 'Bearer ' + token
+                        }
+                    });
+                    if (res.data?.status && res.data?.data) {
+                        const item = res.data.data;
+                        this.paymentStatus = item.trang_thai || 'paid';
+                        this.orderData = {
+                            id_san_pham: item.id,
+                            ten_san_pham: item.ten_san_pham,
+                            hinh_anh: item.hinh_anh,
+                            vi: item.vi,
+                            kich_thuoc: item.kich_thuoc,
+                            so_luong: item.so_luong,
+                            gia_don_vi: item.gia_don_vi,
+                            tong_tien: item.tong_tien,
+                            ghi_chu: item.ghi_chu || ''
+                        };
+                        this.delivery = {
+                            recipient: item.ten_nguoi_nhan || '',
+                            phone: item.sdt || '',
+                            address: item.dia_chi || '',
+                            method: item.phuong_thuc_giao || 'express',
+                            notes: item.ghi_chu || ''
+                        };
+                        return;
+                    }
+                } catch (err) {
+                    console.error('Load order history error:', err);
+                }
+            }
+
+            this.orderData = {
+                id_san_pham: null,
+                ten_san_pham: 'Khô Gà Chộ Đó',
+                hinh_anh: 'https://voz.vn/attachments/1000016571-jpg.3225622/',
+                vi: 'Cay',
+                kich_thuoc: 'Vừa (500g)',
+                so_luong: 1,
+                gia_don_vi: 150000,
+                tong_tien: 150000,
+                ghi_chu: ''
+            };
         },
 
         generateOrderId() {
+            if (this.orderData?.id_san_pham) {
+                return String(this.orderData.id_san_pham).padStart(6, '0');
+            }
             return Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
         },
 
@@ -459,12 +572,16 @@ export default {
                 phuong_thuc_giao: this.delivery.method,
                 ghi_chu: this.orderData.ghi_chu || this.delivery.notes,
                 phuong_thuc_thanh_toan: this.paymentMethod,
-                giam_gia: this.discount
+                giam_gia: this.discount,
+                hinh_anh: this.orderData.hinh_anh,
+                gia_don_vi: this.orderData.gia_don_vi,
+                vi: this.orderData.vi,
+                kich_thuoc: this.orderData.kich_thuoc,
             };
 
             console.log('Submitting order:', orderPayload);
 
-            axios.post('http://127.0.0.1:8000/api/client/don-hang/create', orderPayload, {
+            axios.post('/api/client/don-hang/create', orderPayload, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
@@ -473,9 +590,11 @@ export default {
                     console.log('Order response:', res.data);
                     if (res.data.status) {
                         this.$toast.success('Đặt hàng thành công! 🎉');
+                        this.paymentStatus = 'paid';
+                        sessionStorage.setItem('orderStatus', 'paid');
                         sessionStorage.removeItem('orderData');
                         setTimeout(() => {
-                            this.$router.push('/lich-su-don-hang');
+                            this.$router.push('/');
                         }, 2000);
                     } else {
                         this.$toast.error(res.data.message || 'Có lỗi xảy ra');

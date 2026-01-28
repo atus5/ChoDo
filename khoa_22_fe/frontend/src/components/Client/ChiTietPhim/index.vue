@@ -2,7 +2,7 @@
     <!-- Product Banner Section -->
     <div class="">
         <div class="ratio ratio-16x9 shadow-lg overflow-hidden" style="height: 450px; object-fit: cover; ">
-            <img :src="chi_tiet_phim.hinh_anh" alt="Product Banner" style="width: 100%; height: 100%; object-fit: cover;">
+            <img :src="getImageUrl(chi_tiet_phim.hinh_anh)" loading="lazy" alt="Product Banner" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
     </div>
 
@@ -11,7 +11,7 @@
         <div class="row g-4">
             <!-- Poster Section -->
             <div class="col-md-4">
-                <img :src="chi_tiet_phim.hinh_anh" alt="Movie Poster" class="img-fluid rounded shadow-lg mb-4">
+                <img :src="getImageUrl(chi_tiet_phim.hinh_anh)" loading="lazy" alt="Movie Poster" class="img-fluid rounded shadow-lg mb-4">
                 <div class="d-grid gap-3">
                     <button class="btn btn-warning py-3 fw-bold" @click="checkLoginAndBuy()">
                         <i class="fa-solid fa-ticket"></i> Mua khô gà
@@ -25,10 +25,10 @@
                     <h1 class="fw-bold text-dark mb-3">🐔 {{ chi_tiet_phim.ten_phim || 'Khô Gà Tuyệt Vời' }}</h1>
                     <div class="d-flex flex-wrap gap-2 mb-3">
                         <span class="badge bg-danger rounded-pill px-3 py-2" style="font-size: 16px;">
-                            <strong>Giá: {{ chi_tiet_phim.thoi_luong ? chi_tiet_phim.thoi_luong + '₫' : '0₫' }}</strong>
+                            <strong>Giá: {{ formatVND(chi_tiet_phim.thoi_luong || 0) }}</strong>
                         </span>
                         <span class="badge bg-warning rounded-pill px-3 py-2 text-dark">
-                            ⭐ 4.8/5 (2.5K reviews)
+                            ⭐ {{ chi_tiet_phim.tinh_trang || '4.8/5' }}
                         </span>
                     </div>
                 </div>
@@ -41,23 +41,23 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
                                     <span class="fw-bold text-dark">Thương Hiệu:</span>
-                                    <span>{{ chi_tiet_phim.dao_dien || 'Chộ Đó Premium' }}</span>
+                                    <span>{{ chi_tiet_phim.nha_cung_cap || 'Chộ Đó' }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
                                     <span class="fw-bold text-dark">Xuất Xứ:</span>
-                                    <span>{{ chi_tiet_phim.quoc_gia || 'Việt Nam' }}</span>
+                                    <span>{{ chi_tiet_phim.quoc_gia || '120 Yên Lãng' }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
                                     <span class="fw-bold text-dark">Loại Vị:</span>
-                                    <span>{{ getRandomFlavor(chi_tiet_phim.id) }}</span>
+                                    <span>{{ chi_tiet_phim.loai_vi || getRandomFlavor(chi_tiet_phim.id) }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between mb-2 border-bottom pb-2">
                                     <span class="fw-bold text-dark">Trọng Lượng:</span>
-                                    <span>{{ getRandomWeight(chi_tiet_phim.id) }}</span>
+                                    <span>{{ chi_tiet_phim.kich_thuoc || getRandomWeight(chi_tiet_phim.id) }}</span>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <span class="fw-bold text-dark">Công Ty:</span>
-                                    <span>{{ chi_tiet_phim.nha_san_xuat || 'Khô Gà Chộ Đó' }}</span>
+                                    <span>{{ chi_tiet_phim.cong_ty || 'Công ty TNHH Chộ Đó Foods' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                         <h4 class="fw-bold mb-3 border-bottom pb-2">🧂 Thành Phần Chính</h4>
                         <div class="card shadow-sm mb-4">
                             <div class="card-body">
-                                <p class="mb-0">{{ chi_tiet_phim.dien_vien || 'Gà ta nướng, gia vị cay, muối, tiêu' }}</p>
+                                <p class="mb-0">{{ chi_tiet_phim.dien_vien }}</p>
                             </div>
                         </div>
                         <h4 class="fw-bold mb-3 border-bottom pb-2">📜 Chứng Chỉ Chất Lượng</h4>
@@ -84,9 +84,9 @@
                 <div class="mt-4">
                     <h4 class="fw-bold mb-3 border-bottom pb-2">📝 Mô Tả Chi Tiết</h4>
                     <div class="card shadow-sm">
-                        <div class="card-body">
-                            <p class="fs-7 lh-base text-dark text-justify">
-                                {{ chi_tiet_phim.noi_dung || 'Khô gà chất lượng cao, được chế biến theo công thức truyền thống kết hợp với công nghệ hiện đại. Mỗi miếng khô gà đều được chọn lọc kỹ càng để đảm bảo độ mềm, thơm và ngon nhất.' }}
+                        <div class="card-body p-4 description-scroll">
+                            <p class="text-dark m-0" style="white-space: pre-wrap; word-wrap: break-word; line-height: 1.8; font-size: 0.95rem;">
+                                {{ chi_tiet_phim.mo_ta || 'Khô gà chất lượng cao, được chế biến theo công thức truyền thống kết hợp với công nghệ hiện đại. Mỗi miếng khô gà đều được chọn lọc kỹ càng để đảm bảo độ mềm, thơm và ngon nhất.' }}
                             </p>
                         </div>
                     </div>
@@ -143,15 +143,15 @@
                         <div class="col-12">
                             <div class="d-flex align-items-center gap-3">
                                 <div class="text-center">
-                                    <h3 class="fw-bold text-danger mb-0">4.8</h3>
-                                    <p class="text-muted small mb-0">/5 ⭐⭐⭐⭐⭐</p>
+                                    <h3 class="fw-bold text-danger mb-0">{{ getRatingScore() }}</h3>
+                                    <p class="text-muted small mb-0 star-display">{{ getStarDisplay() }}</p>
                                 </div>
                                 <div class="flex-grow-1">
                                     <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 96%;"
-                                            aria-valuenow="96" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" :style="{ width: getRatingPercentage() + '%' }"
+                                            :aria-valuenow="getRatingPercentage()" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <p class="text-muted small mt-1">Từ 2,542 đánh giá</p>
+                                    <p class="text-muted small mt-1">{{ getRatingText() }}</p>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
                             onmouseout="this.style.transform='none'; this.style.boxShadow='none'; this.querySelector('.btn-overlay').style.opacity = '0'">
 
                             <div class="card-img-top">
-                                <img :src="value.hinh_anh" class="img-fluid" alt=""
+                                <img :src="getImageUrl(value.hinh_anh)" loading="lazy" class="img-fluid" alt=""
                                     style="height: 500px; object-fit: cover;">
                             </div>
 
@@ -342,9 +342,15 @@ export default {
     },
     mounted() {
         this.loadChiTietPhim();
-        this.dataBinhLuan();
+        // Bình luận chưa hỗ trợ cho mock khô gà, tạm bỏ
+        this.list_binh_luan = [];
     },
     methods: {
+        formatVND(value) {
+            if (!value && value !== 0) return '0₫';
+            const number = Number(value) || 0;
+            return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+        },
         formatTime(time) {
             return time.slice(0, 5);
         },
@@ -352,27 +358,93 @@ export default {
             const d = new Date(date);
             return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
         },
-        loadChiTietPhim() {
-            var payload = {
-                id: this.id_phim
-            }
-            axios.post('http://127.0.0.1:8000/api/client/chi-tiet-phim/get-data', payload)
-                .then((res) => {
-                    if (res.data.status) {
-                        this.chi_tiet_phim = res.data.data_phim;
-                        this.suat_chieu_phim = res.data.data_suat_chieu;
-                        this.list_phim_khac = res.data.list_phim_khac;
-                        this.list_phim_khac = this.list_phim_khac.filter(phim => phim.tinh_trang == 2).slice(0, 4);
-                        console.log(this.list_phim_khac);
+        async loadChiTietPhim() {
+            const fallbackImg = 'https://voz.vn/attachments/542754057_1467285577853420_8471185407916019492_n-jpg.3225827/';
+            const statusOk = (res) => res?.data?.status === true || res?.data?.status === 'success';
 
-                    } else {
-                        this.$toast.error(res.data.message);
+            // Attempt 1: API endpoint for chi-tiet-phim
+            try {
+                const resPhim = await axios.get(`/api/client/chi-tiet-phim/get-data/${this.id_phim}`, { timeout: 6000 });
+                if (statusOk(resPhim) && resPhim.data?.data_phim) {
+                    const data = resPhim.data.data_phim;
+                    this.chi_tiet_phim = {
+                        ...data,
+                        hinh_anh: data.hinh_anh || fallbackImg,
+                        ten_phim: data.ten_phim,
+                        thoi_luong: Number(data.thoi_luong || 0),
+                        tinh_trang: data.tinh_trang || '4.8/5',
+                        mo_ta: data.mo_ta,
+                        dien_vien: data.dien_vien,
+                        loai_vi: data.the_loai || this.getRandomFlavor(data.id),
+                        kich_thuoc: this.getRandomWeight(data.id),
+                        quoc_gia: data.quoc_gia || '120 Yên Lãng',
+                        nha_cung_cap: data.nha_san_xuat || 'Chộ Đó',
+                        cong_ty: data.nha_san_xuat || 'Công ty TNHH Chộ Đó Foods',
+                    };
+                    console.log('Loaded from API:', this.chi_tiet_phim);
+                    return;
+                }
+            } catch (err) {
+                console.error('API chi-tiet-phim error:', err.message);
+            }
+
+            // Attempt 2: Static JSON file (phim-data.json)
+            try {
+                const resStatic = await fetch('/phim-data.json');
+                if (resStatic.ok) {
+                    const jsonData = await resStatic.json();
+                    const phimList = jsonData.data || [];
+                    const phimItem = phimList.find(p => p.id === parseInt(this.id_phim));
+                    
+                    if (phimItem) {
+                        this.chi_tiet_phim = {
+                            ...phimItem,
+                            hinh_anh: phimItem.hinh_anh || fallbackImg,
+                            ten_phim: phimItem.ten_phim,
+                            thoi_luong: Number(phimItem.thoi_luong || 0),
+                            tinh_trang: phimItem.tinh_trang || '4.8/5',
+                            mo_ta: phimItem.mo_ta,
+                            dien_vien: phimItem.dien_vien,
+                            loai_vi: phimItem.the_loai || this.getRandomFlavor(phimItem.id),
+                            kich_thuoc: this.getRandomWeight(phimItem.id),
+                            quoc_gia: phimItem.quoc_gia || '120 Yên Lãng',
+                            nha_cung_cap: phimItem.nha_san_xuat || phimItem.nha_cung_cap || 'Chộ Đó',
+                            cong_ty: phimItem.nha_san_xuat || phimItem.cong_ty || 'Công ty TNHH Chộ Đó Foods',
+                        };
+                        console.log('Loaded from static JSON:', this.chi_tiet_phim);
+                        return;
                     }
-                })
-                .catch((err) => {
-                    this.$toast.error('Không thể tải thông tin phim');
-                    console.error('Load chi tiet phim error:', err);
-                });
+                }
+            } catch (err) {
+                console.error('Static JSON load error:', err.message);
+            }
+
+            // Fallback 3: API endpoint for kho-ga
+            try {
+                const res = await axios.get(`/api/client/chi-tiet-kho-ga/${this.id_phim}`, { timeout: 6000 });
+                if (statusOk(res) && res.data?.data) {
+                    const data = res.data.data;
+                    this.chi_tiet_phim = {
+                        ...data,
+                        hinh_anh: data.hinh_anh || fallbackImg,
+                        ten_phim: data.ten_kho_ga,
+                        thoi_luong: Number(data.gia || data.thoi_luong || 0),
+                        tinh_trang: data.tinh_trang || '4.8/5',
+                        mo_ta: data.mo_ta,
+                        dien_vien: data.dien_vien || data.thanh_phan,
+                        loai_vi: data.loai_vi || this.getRandomFlavor(data.id),
+                        kich_thuoc: data.kich_thuoc || this.getRandomWeight(data.id),
+                        quoc_gia: data.quoc_gia || '120 Yên Lãng',
+                        nha_cung_cap: data.nha_cung_cap || 'Chộ Đó',
+                        cong_ty: data.cong_ty || data.nha_cung_cap || 'Công ty TNHH Chộ Đó Foods',
+                    };
+                    console.log('Loaded from kho-ga API:', this.chi_tiet_phim);
+                } else {
+                    console.warn('No data found - using placeholder');
+                }
+            } catch (err) {
+                console.error('Fallback kho-ga error:', err.message);
+            }
         },
         binhLuan() {
             var payload = {
@@ -417,7 +489,7 @@ export default {
             if (!token) {
                 // Chưa đăng nhập - chuyển sang trang đăng nhập
                 this.$toast.error('Vui lòng đăng nhập để mua hàng!');
-                this.$router.push('/dang-nhap');
+                this.$router.push('/client/dang-nhap');
                 return;
             }
             
@@ -447,6 +519,7 @@ export default {
             
             // Lưu vào sessionStorage
             sessionStorage.setItem('orderData', JSON.stringify(orderData));
+            sessionStorage.setItem('orderStatus', 'pending');
             
             this.$toast.success(`Chuyển sang thanh toán...`);
             
@@ -476,8 +549,128 @@ export default {
             // Sử dụng productId để tạo consistent result mỗi lần load
             const index = (productId || 1) % weights.length;
             return weights[index];
+        },
+        getRandomIngredients(productId) {
+            const ingredients = [
+                'Ức gà xé sợi, lá chanh, sa tế, ớt sừng',
+                'Đùi gà nướng, hành phi, tỏi Lý Sơn, ớt hiểm',
+                'Ức gà, tiêu xanh Phú Quốc, lá chanh, mật ong',
+                'Gà ta, sả, ớt xiêm, lá chanh, muối thảo mộc',
+                'Ức gà, paprika, tiêu đen, hành phi, lá nguyệt quế',
+                'Ức gà hữu cơ, tỏi đen, ớt bột Hàn, lá oregano'
+            ];
+            const index = (productId || 1) % ingredients.length;
+            return ingredients[index];
+        },
+        getImageUrl(imagePath) {
+            const fallback = 'https://voz.vn/attachments/542754057_1467285577853420_8471185407916019492_n-jpg.3225827/';
+            if (!imagePath) return fallback;
+            if (/^https?:\/\//i.test(imagePath)) return imagePath;
+            if (imagePath.startsWith('/')) return `http://127.0.0.1:8000${imagePath}`;
+            if (imagePath.startsWith('storage/')) return `http://127.0.0.1:8000/${imagePath}`;
+            return `http://127.0.0.1:8000/storage/${imagePath}`;
+        },
+        getRatingScore() {
+            // Display tinh_trang value directly from database
+            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5');
+            return ratingStr;
+        },
+        getRatingPercentage() {
+            // Convert rating to percentage for progress bar
+            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5');
+            // For "X/Y" format, calculate percentage
+            if (ratingStr.includes('/')) {
+                const parts = ratingStr.split('/');
+                const score = parseInt(parts[0]);
+                const max = parseInt(parts[1]);
+                if (!isNaN(score) && !isNaN(max) && max > 0) {
+                    return Math.round((score / max) * 100);
+                }
+            }
+            // For "X.X" format, convert to percentage (assuming out of 5)
+            const score = parseFloat(ratingStr);
+            if (!isNaN(score)) {
+                return Math.round((score / 5) * 100);
+            }
+            return 96;
+        },
+        getStarDisplay() {
+            // Display stars based on rating value
+            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5');
+            
+            // For "X/Y" format, display X stars
+            if (ratingStr.includes('/')) {
+                const parts = ratingStr.split('/');
+                const stars = parseInt(parts[0]);
+                if (!isNaN(stars)) {
+                    return '⭐'.repeat(Math.min(stars, 36)); // Cap at 36 for display
+                }
+            }
+            
+            // For decimal format, display based on 5-star scale
+            const score = parseFloat(ratingStr);
+            if (!isNaN(score)) {
+                const fullStars = Math.floor(score);
+                const hasHalfStar = score % 1 >= 0.5;
+                let stars = '⭐'.repeat(fullStars);
+                if (hasHalfStar) stars += '⭐';
+                return stars;
+            }
+            
+            return '⭐⭐⭐⭐⭐';
+        },
+        getRatingText() {
+            // Format rating text - extract review count or default
+            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5 (2.5K reviews)');
+            // For "X/Y" format (from phims table), use default format
+            if (ratingStr.includes('/') && !ratingStr.includes('reviews')) {
+                return '(2.5K reviews)';
+            }
+            if (ratingStr.includes('K') || ratingStr.includes('reviews')) {
+                return ratingStr.includes('(') ? ratingStr.substring(ratingStr.indexOf('(')) : 'Từ 2,542 đánh giá';
+            }
+            return 'Từ 2,542 đánh giá';
         }
     },
 }
 </script>
-<style></style>
+<style scoped>
+.description-scroll {
+    max-height: 600px;
+    overflow-y: auto;
+    border-radius: 0.375rem;
+}
+
+/* Custom scrollbar styling */
+.description-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.description-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.description-scroll::-webkit-scrollbar-thumb {
+    background: #ff6b6b;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.description-scroll::-webkit-scrollbar-thumb:hover {
+    background: #ff5252;
+}
+
+/* Firefox scrollbar */
+.description-scroll {
+    scrollbar-color: #ff6b6b #f1f1f1;
+    scrollbar-width: thin;
+}
+
+/* Star display styling */
+.star-display {
+    font-size: 0.7rem;
+    word-break: break-word;
+    line-height: 1.2;
+}
+</style>

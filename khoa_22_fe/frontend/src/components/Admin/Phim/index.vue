@@ -142,7 +142,11 @@
                             </select>
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">Mô Tả</label>
+                            <label class="form-label">Mô Tả Ngắn</label>
+                            <textarea v-model="create_phim.mo_ta" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Nội Dung Chi Tiết</label>
                             <textarea v-model="create_phim.noi_dung" class="form-control" rows="3"></textarea>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -222,7 +226,11 @@
                             </select>
                         </div>
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">Mô Tả</label>
+                            <label class="form-label">Mô Tả Ngắn</label>
+                            <textarea v-model="edit_phim.mo_ta" class="form-control" rows="2"></textarea>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Nội Dung Chi Tiết</label>
                             <textarea v-model="edit_phim.noi_dung" class="form-control" rows="3"></textarea>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -364,20 +372,28 @@ export default {
     },
     methods: {
         timKiem() {
-            axios.post('http://127.0.0.1:8000/api/admin/phim/tim-kiem', this.tim_kiem)
+            axios.post('/api/admin/phim/tim-kiem', this.tim_kiem)
                 .then((res) => {
                     this.list_phim = res.data.data;
+                })
+                .catch((error) => {
+                    console.error('Search error:', error);
                 });
         },
         getPhim() {
             axios
-                .get('http://127.0.0.1:8000/api/admin/phim/get-data')
+                .get('/api/admin/phim/get-data')
                 .then((res) => {
                     this.list_phim = res.data.data;
+                    console.log('Phim loaded:', this.list_phim);
                 })
+                .catch((error) => {
+                    console.error('Error loading phim:', error);
+                    this.$toast.error('Không thể tải thông tin phim: ' + error.message);
+                });
         },
         themPhim() {
-            axios.post('http://127.0.0.1:8000/api/admin/phim/add-data', this.create_phim)
+            axios.post('/api/admin/phim/add-data', this.create_phim)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -387,7 +403,7 @@ export default {
                 });
         },
         capNhatPhim() {
-            axios.post('http://127.0.0.1:8000/api/admin/phim/update', this.edit_phim)
+            axios.post('/api/admin/phim/update', this.edit_phim)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -396,7 +412,7 @@ export default {
                 });
         },
         xoaPhim() {
-            axios.post('http://127.0.0.1:8000/api/admin/phim/delete', this.del_phim)
+            axios.post('/api/admin/phim/delete', this.del_phim)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -405,7 +421,7 @@ export default {
                 });
         },
         doiTrangThai(value) {
-            axios.post('http://127.0.0.1:8000/api/admin/phim/change-status', value)
+            axios.post('/api/admin/phim/change-status', value)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);

@@ -60,7 +60,7 @@
                                 </div>
                                 <h6 class="card-title fw-bold">Khô Gà Nướng Thơm: Lợi Ích Sức Khỏe Bạn Không Nên Bỏ Qua</h6>
                                 <p class="card-text small">Khô gà không chỉ ngon miệng mà còn tốt cho sức khỏe. Tìm hiểu về những thành phần dinh dưỡng quý giá...</p>
-                                <small class="text-muted">👤 Bác Tú Chuyên Gia | 📅 20 Tháng 1</small>
+                                <small class="text-muted">👤 La Quý Xưa | 📅 20 Tháng 1</small>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 </div>
                                 <h6 class="card-title fw-bold">Cách Bảo Quản Khô Gà Tươi Lâu Ngon Như Mới</h6>
                                 <p class="card-text small">Học những cách bảo quản khô gà đúng cách để giữ độ giòn, thơm và vị trong thời gian lâu nhất...</p>
-                                <small class="text-muted">👤 Chị Hạnh Nội Trợ | 📅 18 Tháng 1</small>
+                                <small class="text-muted">👤 Trần Cảnh Xưa | 📅 18 Tháng 1</small>
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                                 </div>
                                 <h6 class="card-title fw-bold">Lễ Hội Khô Gà Chộ Đó 2025: Sự Kiện Không Thể Bỏ Lỡ</h6>
                                 <p class="card-text small">Tham dự lễ hội khô gà lớn nhất năm với hàng loạt hạt giống, demo nấu ăn, và giải thưởng độc quyền...</p>
-                                <small class="text-muted">👤 Tổng Biên Tập | 📅 15 Tháng 1</small>
+                                <small class="text-muted">👤 Con chó cao bằng bộ PC | 📅 15 Tháng 1</small>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                                 </div>
                                 <h6 class="card-title fw-bold">5 Cách Ăn Khô Gà Sáng Tạo Bạn Chưa Bao Giờ Thử</h6>
                                 <p class="card-text small">Từ khô gà xào rau, khô gà làm snack, đến khô gà nạp cơm... Khám phá những cách ăn độc lạ này...</p>
-                                <small class="text-muted">👤 Đầu Bếp Minh | 📅 10 Tháng 1</small>
+                                <small class="text-muted">👤 Phạm Chí Xưa | 📅 10 Tháng 1</small>
                             </div>
                         </div>
                     </div>
@@ -220,7 +220,7 @@ export default {
                     id: 1,
                     title: "🐔 Bí Quyết Ướp Khô Gà Cay Siêu Cấp Chuẩn Chộ Đó",
                     category: "Công Thức",
-                    author: "Đầu Bếp Long",
+                    author: "Trần Cảnh Xưa",
                     date: "24/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Khô gà cay siêu cấp không chỉ là một món ăn vặt, mà còn là một nghệ thuật. Để tạo ra những miếng khô gà thơm lừng, giòn rối, cay nhanh nhạy, bạn cần biết rõ quy trình ướp từ việc chọn nguyên liệu đến thời gian sấy.\n\nBước 1: Chọn gà ta tươi, không quá già.\nBước 2: Làm sạch và cắt thành miếng vừa ăn.\nBước 3: Ướp với gia vị: tiêu đen, tỏi, ớt, muối, nước mắm.\nBước 4: Ướp trong tủ lạnh từ 4-6 giờ.\nBước 5: Sấy lạnh hoặc nướng chậm 2-3 giờ.\n\nBí quyết chính là sử dụng ớt cay thật từ Tây Bắc và không ướp quá lâu để giữ độ ngọt của thịt gà.",
@@ -230,7 +230,7 @@ export default {
                     id: 2,
                     title: "Khô Gà Nướng Thơm: Lợi Ích Sức Khỏe Bạn Không Nên Bỏ Qua",
                     category: "Dinh Dưỡng",
-                    author: "Bác Tú Chuyên Gia",
+                    author: "Phạm Chí Xưa",
                     date: "20/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Khô gà nướng thơm không chỉ là một món ngon mà còn chứa nhiều dinh dưỡng tốt cho sức khỏe.\n\nThành phần dinh dưỡng:\n- Protein cao: giúp phục hồi cơ bắp\n- Sắt: tốt cho máu\n- Kẽm: tăng cường miễn dịch\n- Vitamin B: giúp trao đổi chất\n\nNgoài ra, khô gà chứa ít chất béo hơn so với các loại thịt khác, rất phù hợp cho những người theo dõi cân nặng.",
@@ -240,7 +240,7 @@ export default {
                     id: 3,
                     title: "Cách Bảo Quản Khô Gà Tươi Lâu Ngon Như Mới",
                     category: "Tuyệt Chiêu",
-                    author: "Chị Hạnh Nội Trợ",
+                    author: "Trần Quang Xưa",
                     date: "18/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Bảo quản khô gà đúng cách là chìa khóa để giữ cho nó lâu ngon.\n\nCách 1: Bảo quản trong tủ lạnh\n- Để trong hộp kín trong tủ lạnh ở nhiệt độ 2-4°C\n- Có thể bảo quản được 1-2 tuần\n\nCách 2: Bảo quản trong ngăn đông\n- Để trong túi kín trong ngăn đông ở -18°C\n- Có thể bảo quản được 3-4 tháng\n\nCách 3: Bảo quản ở nhiệt độ phòng\n- Để trong hộp kín, nơi khô ráo\n- Thêm gói hút ẩm\n- Có thể bảo quản được 2-3 tuần",
@@ -250,7 +250,7 @@ export default {
                     id: 4,
                     title: "Lễ Hội Khô Gà Chộ Đó 2025: Sự Kiện Không Thể Bỏ Lỡ",
                     category: "Sự Kiện",
-                    author: "Tổng Biên Tập",
+                    author: "Con chó cao bằng bộ PC",
                     date: "15/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Lễ Hội Khô Gà Chộ Đó 2025 sẽ diễn ra vào tháng 2 tại thị trấn Chộ Đó.\n\nCác hoạt động chính:\n- Triển lãm khô gà từ hơn 50 nông dân\n- Demo nấu ăn với các đầu bếp nổi tiếng\n- Thi chế biến khô gà sáng tạo\n- Mua bán trực tiếp với giá ưu đãi lên đến 50%\n- Tasting khô gà miễn phí\n\nĐây là cơ hội tuyệt vời để khám phá những sản phẩm khô gà tốt nhất từ Chộ Đó.",
@@ -260,7 +260,7 @@ export default {
                     id: 5,
                     title: "5 Cách Ăn Khô Gà Sáng Tạo Bạn Chưa Bao Giờ Thử",
                     category: "Mẹo Nhà",
-                    author: "Đầu Bếp Minh",
+                    author: "Nguyễn Anh Xưa",
                     date: "10/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Ngoài ăn thẳng, bạn có thể tận dụng khô gà theo nhiều cách sáng tạo khác:\n\n1. Khô Gà Xào Rau: Xào với rau mầm, hành, tỏi\n2. Khô Gà Làm Topping: Rắc lên cháo, phở, mì\n3. Khô Gà Nạp Cơm: Trộn với cơm cơm cà chua\n4. Khô Gà Bánh Mì: Kẹp vào bánh mì tươi\n5. Khô Gà Gỏi: Xé nhỏ trộn với gỏi đu đủ, cà chua\n\nMỗi cách ăn đều tạo ra hương vị riêng biệt độc đáo!",
@@ -270,7 +270,7 @@ export default {
                     id: 6,
                     title: "Khô Gà Sấy Lạnh Chống Ung Thư?",
                     category: "Tin Tức",
-                    author: "PGS.TS. Nguyễn Văn A",
+                    author: "Trần Cảnh Xưa",
                     date: "05/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Một nghiên cứu mới từ Viện Dinh Dưỡng cho thấy khô gà sấy lạnh có chứa các chất chống oxy hóa cao.\n\nTheo các nhà khoa học, quá trình sấy lạnh giữ lại nhiều vitamin và chất chống oxy hóa hơn so với các phương pháp sấy truyền thống.\n\nTuy nhiên, cần lưu ý rằng khô gà không phải là thuốc chữa bệnh, mà chỉ là một phần của chế độ ăn uống lành mạnh.",
@@ -280,7 +280,7 @@ export default {
                     id: 7,
                     title: "Startup Khô Gà Tây Bắc Gây Sốt",
                     category: "Kinh Doanh",
-                    author: "Biến Tập Kinh Tế",
+                    author: "Trần Cảnh Xưa",
                     date: "02/01/2025",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Một startup tại Lào Cai đang tạo sóng trong ngành khô gà với mô hình bán hàng online hiện đại.\n\nThiết lập năm 2023, công ty đã phát triển từ cơ sở nhỏ thành một thương hiệu có mặt trên các sàn thương mại điện tử lớn.\n\nTham vọng của công ty là mang khô gà Tây Bắc ra thế giới, xây dựng nó thành một sản phẩm OCOP đạt chuẩn quốc tế.",
@@ -290,7 +290,7 @@ export default {
                     id: 8,
                     title: "Khô Gà Chua Cay Lên Top 1 Google",
                     category: "Thành Công",
-                    author: "Tổng Biên Tập",
+                    author: "Thằng em Linh",
                     date: "28/12/2024",
                     image: "https://voz.vn/attachments/1000016571-jpg.3225622/",
                     content: "Khô gà chua cay từ Chộ Đó vừa lên Top 1 trên Google Trends trong hạng mục 'đặc sản Việt Nam'.\n\nThành công này là kết quả của nỗ lực trong việc nâng cao chất lượng sản phẩm và xây dựng thương hiệu.\n\nNhiều khách hàng quốc tế đã bắt đầu quan tâm đến sản phẩm này, và công ty đang chuẩn bị để xuất khẩu.",

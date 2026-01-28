@@ -9,7 +9,7 @@ export default function (to, from, next) {
         return;
     }
     axios
-        .get("http://127.0.0.1:8000/api/admin/check-token", {
+        .get("/api/admin/check-token", {
             headers: {
                 Authorization: "Bearer " + token,
             },

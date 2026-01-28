@@ -63,24 +63,30 @@
                                         <p class="mb-0">Chưa có đơn hàng nào</p>
                                     </li>
                                     <li v-for="order in orders" :key="order.id" class="dropdown-item p-0">
-                                        <div class="p-2 border-bottom" style="cursor: pointer; hover-color: #f0f0f0;"
-                                            @click="viewOrderDetail(order.id)">
-                                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                                <span class="fw-bold">{{ order.ten_san_pham }}</span>
-                                                <span class="badge" :class="getStatusBadgeClass(order.trang_thai)">
-                                                    {{ getStatusLabel(order.trang_thai) }}
-                                                </span>
+                                        <div class="p-2 border-bottom d-flex gap-2" style="cursor: pointer; hover-color: #f0f0f0;"
+                                            @click="viewOrderDetail(order)">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                                    <span class="fw-bold">{{ order.ten_san_pham }}</span>
+                                                    <span class="badge" :class="getStatusBadgeClass(order.trang_thai)">
+                                                        {{ getStatusLabel(order.trang_thai) }}
+                                                    </span>
+                                                </div>
+                                                <div class="small text-muted mb-1">
+                                                    <i class="fa-solid fa-hashtag"></i> #{{ order.id }}
+                                                </div>
+                                                <div class="small text-muted">
+                                                    <i class="fa-solid fa-calendar"></i> 
+                                                    {{ formatDate(order.created_at) }}
+                                                </div>
+                                                <div class="small text-danger fw-bold mt-1">
+                                                    💰 {{ formatVND(order.tong_tien) }}
+                                                </div>
                                             </div>
-                                            <div class="small text-muted mb-1">
-                                                <i class="fa-solid fa-hashtag"></i> #{{ order.id }}
-                                            </div>
-                                            <div class="small text-muted">
-                                                <i class="fa-solid fa-calendar"></i> 
-                                                {{ formatDate(order.created_at) }}
-                                            </div>
-                                            <div class="small text-danger fw-bold mt-1">
-                                                💰 {{ formatVND(order.tong_tien) }}
-                                            </div>
+                                            <button v-if="order.sourceType !== 'api'" class="btn btn-outline-danger btn-sm h-100"
+                                                @click.stop="removeOrder(order)">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
                                         </div>
                                     </li>
                                     
@@ -230,24 +236,70 @@ export default {
         // Phương thức xử lý lịch sử đơn hàng
         loadOrders() {
             const token = localStorage.getItem("key_client");
-            if (!token) return;
+            const localPreorders = JSON.parse(localStorage.getItem('preorderOrders') || '[]').map((item) => ({
+                id: item.id,
+                ten_san_pham: item.ten_san_pham,
+                tong_tien: item.tong_tien,
+                trang_thai: 'preorder',
+                created_at: item.created_at,
+                hinh_anh: item.hinh_anh,
+                so_luong: item.so_luong,
+                gia_don_vi: item.gia_don_vi,
+                vi: item.vi,
+                kich_thuoc: item.kich_thuoc,
+                ghi_chu: item.ghi_chu,
+                ten_nguoi_nhan: item.ten_nguoi_nhan,
+                sdt: item.sdt,
+                dia_chi: item.dia_chi,
+                email: item.email,
+                sourceType: 'preorder',
+            }));
+            if (!token) {
+                this.orders = [...localPreorders];
+                this.orderCount = this.orders.length;
+                return;
+            }
 
-            axios.get('http://127.0.0.1:8000/api/client/don-hang/list', {
+            axios.get('/api/client/lich-su-dat-hang', {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
             })
                 .then((res) => {
-                    console.log('Đơn hàng:', res.data);
+                    console.log('Lịch sử đặt hàng:', res.data);
                     if (res.data.status && res.data.data) {
-                        this.orders = res.data.data;
+                        const apiOrders = res.data.data.map((item) => ({
+                            id: item.id,
+                            ten_san_pham: item.ten_san_pham,
+                            tong_tien: item.tong_tien,
+                            trang_thai: item.trang_thai || 'paid',
+                            created_at: item.created_at,
+                            hinh_anh: item.hinh_anh,
+                            so_luong: item.so_luong,
+                            gia_don_vi: item.gia_don_vi,
+                            vi: item.vi,
+                            kich_thuoc: item.kich_thuoc,
+                            ghi_chu: item.ghi_chu,
+                            ten_nguoi_nhan: item.ten_nguoi_nhan,
+                            sdt: item.sdt,
+                            dia_chi: item.dia_chi,
+                            sourceType: 'history',
+                        }));
+                        const paidNames = new Set([
+                            ...apiOrders.map((item) => item.ten_san_pham),
+                        ]);
+                        const filteredPreorders = localPreorders.filter((item) => !paidNames.has(item.ten_san_pham));
+                        this.orders = [...apiOrders, ...filteredPreorders];
+                        this.orderCount = this.orders.length;
+                    } else {
+                        this.orders = [...localPreorders];
                         this.orderCount = this.orders.length;
                     }
                 })
                 .catch((error) => {
                     console.log('Lỗi khi tải đơn hàng:', error);
-                    this.orders = [];
-                    this.orderCount = 0;
+                    this.orders = [...localPreorders];
+                    this.orderCount = this.orders.length;
                 });
         },
         getStatusLabel(status) {
@@ -256,7 +308,9 @@ export default {
                 'preparing': 'Đang chuẩn bị',
                 'shipping': 'Đang giao',
                 'delivered': 'Đã giao',
-                'cancelled': 'Đã hủy'
+                'cancelled': 'Đã hủy',
+                'preorder': 'Đặt trước',
+                'paid': 'Đã thanh toán'
             };
             return statusMap[status] || status;
         },
@@ -266,7 +320,9 @@ export default {
                 'preparing': 'bg-info text-white',
                 'shipping': 'bg-primary text-white',
                 'delivered': 'bg-success text-white',
-                'cancelled': 'bg-danger text-white'
+                'cancelled': 'bg-danger text-white',
+                'preorder': 'bg-info text-white',
+                'paid': 'bg-success text-white'
             };
             return classMap[status] || 'bg-secondary text-white';
         },
@@ -282,11 +338,42 @@ export default {
                 currency: 'VND'
             }).format(amount);
         },
-        viewOrderDetail(orderId) {
-            this.$router.push(`/don-hang/${orderId}`);
+        viewOrderDetail(order) {
+            if (order) {
+                sessionStorage.setItem('orderData', JSON.stringify(order));
+                if (order.trang_thai) {
+                    sessionStorage.setItem('orderStatus', order.trang_thai);
+                }
+            }
+            this.$router.push(`/don-hang/${order?.id || order}`);
             // Đóng dropdown
             const dropdown = new bootstrap.Dropdown(document.getElementById('orderDropdown'));
             dropdown.hide();
+        },
+        removeOrder(order) {
+            if (!order) return;
+
+            if (order.sourceType === 'preorder') {
+                const list = JSON.parse(localStorage.getItem('preorderOrders') || '[]');
+                const next = list.filter((item) => Number(item.id) !== Number(order.id));
+                localStorage.setItem('preorderOrders', JSON.stringify(next));
+            }
+
+            if (order.sourceType === 'history') {
+                const token = localStorage.getItem('key_client');
+                if (token) {
+                    axios.delete(`/api/client/lich-su-dat-hang/${order.id}`, {
+                        headers: {
+                            Authorization: 'Bearer ' + token
+                        }
+                    }).catch((error) => {
+                        console.log('Lỗi khi xóa lịch sử:', error);
+                    });
+                }
+            }
+
+            this.orders = this.orders.filter((item) => Number(item.id) !== Number(order.id) || item.sourceType !== order.sourceType);
+            this.orderCount = this.orders.length;
         }
     },
 }

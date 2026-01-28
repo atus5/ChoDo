@@ -1,0 +1,41 @@
+{
+    "status": true,
+    "data": [
+        {
+            "id": 1,
+            "ten_kho_ga": "Khô gà loại 3",
+            "mo_ta": "Alo Phong à Phong, em đừng có chõi",
+            "mo_ta_ngan": "Chanh sả thanh mát, thơm dịu, sắp ra mắt.",
+            "hinh_anh": "https:\/\/voz.vn\/attachments\/542754057_1467285577853420_8471185407916019492_n-jpg.3225827\/",
+            "loai_vi": "Chanh sả",
+            "gia": 36000,
+            "dien_vien": "Bã trầu",
+            "ngay_phat_hanh": "2026-02-04",
+            "so_luong_dat_truoc": 120
+        },
+        {
+            "id": 2,
+            "ten_kho_ga": "Khô gà loại 4",
+            "mo_ta": "Alo Linh à Linh, em đừng có chõi",
+            "mo_ta_ngan": "Bơ tỏi béo thơm, hậu vị đậm.",
+            "hinh_anh": "https:\/\/voz.vn\/attachments\/542754057_1467285577853420_8471185407916019492_n-jpg.3225827\/",
+            "loai_vi": "Bơ tỏi",
+            "gia": 63000,
+            "dien_vien": "Cao su",
+            "ngay_phat_hanh": "2026-02-07",
+            "so_luong_dat_truoc": 86
+        },
+        {
+            "id": 3,
+            "ten_kho_ga": "Khô gà loại 5",
+            "mo_ta": "Bã mía khô tẩm gia vị",
+            "mo_ta_ngan": "Cay Hàn tê tê, thơm nồng.",
+            "hinh_anh": "https:\/\/voz.vn\/attachments\/542754057_1467285577853420_8471185407916019492_n-jpg.3225827\/",
+            "loai_vi": "Cay Hàn",
+            "gia": 366336,
+            "dien_vien": "Bã mía loại 2",
+            "ngay_phat_hanh": "2026-02-11",
+            "so_luong_dat_truoc": 64
+        }
+    ]
+}

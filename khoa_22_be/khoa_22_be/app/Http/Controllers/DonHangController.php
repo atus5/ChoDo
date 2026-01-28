@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DonHang;
+use App\Models\LichSuDatHang;
 use App\Models\Ve;
 use App\Models\SuatChieu;
 use Illuminate\Http\Request;
@@ -254,6 +255,10 @@ class DonHangController extends Controller
             'ghi_chu' => 'nullable|string',
             'phuong_thuc_thanh_toan' => 'required|string',
             'giam_gia' => 'nullable|integer',
+            'hinh_anh' => 'nullable|string',
+            'gia_don_vi' => 'nullable|integer',
+            'vi' => 'nullable|string',
+            'kich_thuoc' => 'nullable|string',
         ]);
 
         try {
@@ -277,6 +282,27 @@ class DonHangController extends Controller
                 'trang_thai' => 'pending',
                 'is_thanh_toan' => 0,
                 'ngay_dat' => now(),
+            ]);
+
+            LichSuDatHang::create([
+                'id_khach_hang' => $user->id,
+                'ten_tai_khoan' => $user->ho_va_ten,
+                'email' => $user->email,
+                'ma_don_hang' => $donHang->ma_don_hang,
+                'ten_san_pham' => $validated['ten_san_pham'],
+                'so_luong' => $validated['so_luong'],
+                'gia_don_vi' => $validated['gia_don_vi'] ?? $validated['gia_tien'],
+                'tong_tien' => $tong_tien,
+                'trang_thai' => 'paid',
+                'hinh_anh' => $validated['hinh_anh'] ?? null,
+                'vi' => $validated['vi'] ?? null,
+                'kich_thuoc' => $validated['kich_thuoc'] ?? null,
+                'ghi_chu' => $validated['ghi_chu'] ?? null,
+                'ten_nguoi_nhan' => $validated['ten_nguoi_nhan'],
+                'sdt' => $validated['sdt'],
+                'dia_chi' => $validated['dia_chi'],
+                'phuong_thuc_giao' => $validated['phuong_thuc_giao'],
+                'phuong_thuc_thanh_toan' => $validated['phuong_thuc_thanh_toan'],
             ]);
 
             return response()->json([

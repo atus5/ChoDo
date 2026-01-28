@@ -34,9 +34,9 @@
         <!-- Orders List -->
         <div v-if="filteredOrders.length > 0" class="row g-4">
             <div v-for="order in filteredOrders" :key="order.id" class="col-12">
-                <div class="card border-0 shadow-lg hover-shadow" style="border-radius: 15px; transition: all 0.3s;" 
+                <div class="card border-0 shadow-lg hover-shadow" style="border-radius: 15px; transition: all 0.3s; cursor: pointer;" 
                     @mouseenter="selectedOrder = order.id" @mouseleave="selectedOrder = null"
-                    @click="viewOrderDetail(order.id)" style="cursor: pointer;">
+                    @click="viewOrderDetail(order.id)">
                     <div class="card-body p-4">
                         <div class="row align-items-center">
                             <!-- Order ID & Date -->

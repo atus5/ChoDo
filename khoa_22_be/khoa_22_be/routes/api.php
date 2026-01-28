@@ -17,6 +17,12 @@ use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\ChiTietKhoGaController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DanhGiaController;
+use App\Http\Controllers\MockPhimController;
+use App\Http\Controllers\MockChiTietKhoGaController;
+use App\Http\Controllers\ChiTietKhoGaDbController;
+use App\Http\Controllers\MockDonHangController;
+use App\Http\Controllers\KhoGaSapBanController;
+use App\Http\Controllers\LichSuDatHangController;
 
 // Auth - Client
 Route::post('/client/dang-ky', [AuthController::class, 'dangKy']);
@@ -38,11 +44,17 @@ Route::middleware('auth.api')->group(function () {
 
     // Đặt vé - Client
     Route::post('/client/dat-ve', [DonHangController::class, 'datVe']);
+    Route::post('/client/don-hang/create', [DonHangController::class, 'createOrder']);
     Route::get('/client/don-hang', [DonHangController::class, 'getDonHangOfUser']);
     
     // Lịch sử đơn hàng - PROTECTED
-    Route::get('/client/don-hang/list', [DonHangController::class, 'getOrderHistory']);
-    Route::post('/client/don-hang/create', [DonHangController::class, 'createOrder']);
+    Route::get('/client/don-hang/list-auth', [DonHangController::class, 'getOrderHistory']);
+
+    // Lịch sử đặt hàng khô gà
+    Route::get('/client/lich-su-dat-hang', [LichSuDatHangController::class, 'index']);
+    Route::get('/client/lich-su-dat-hang/{id}', [LichSuDatHangController::class, 'show'])->where('id', '[0-9]+');
+    Route::post('/client/lich-su-dat-hang', [LichSuDatHangController::class, 'store']);
+    Route::delete('/client/lich-su-dat-hang/{id}', [LichSuDatHangController::class, 'destroy'])->where('id', '[0-9]+');
     
     // Parametric routes - MUST be last
     Route::get('/client/don-hang/{id}', [DonHangController::class, 'getOrderDetail'])->where('id', '[0-9]+');
@@ -50,22 +62,18 @@ Route::middleware('auth.api')->group(function () {
 });
 
 // Client - Phim đang chiếu
+Route::get('/client/home-page', [PhimController::class, 'homePage']);
 Route::get('/client/phim-dang-chieu', [PhimController::class, 'getPhimDangChieu']);
 Route::get('/client/phim/get-data', [PhimController::class, 'getDataClient']);
+Route::get('/client/kho-ga-sap-ban/get-data', [KhoGaSapBanController::class, 'getData']);
 Route::post('/client/chi-tiet-phim/get-data', [PhimController::class, 'getChiTietPhimData']);
+Route::get('/client/chi-tiet-phim/get-data/{id}', [PhimController::class, 'getChiTietPhimData'])->where('id', '[0-9]+');
 Route::get('/client/phim/{id}', [PhimController::class, 'getChiTietPhim']);
 Route::get('/client/suat-chieu/{id}/ghe', [SuatChieuController::class, 'getGheOfSuatChieu']);
 
 // Client - Comment/Rating
 Route::post('/client/chi-tiet-phim/binh-luan', [DanhGiaController::class, 'binh_luan']);
 Route::get('/client/chi-tiet-phim/binh-luan/get-data/{id_phim}', [DanhGiaController::class, 'binh_luan_get_data']);
-
-// Client - Chi tiết khô gà
-Route::get('/client/chi-tiet-kho-ga/get-data', [ChiTietKhoGaController::class, 'getData']);
-Route::get('/client/chi-tiet-kho-ga/{id}', [ChiTietKhoGaController::class, 'getChiTiet']);
-Route::get('/client/chi-tiet-kho-ga/tinh-trang/{tinh_trang}', [ChiTietKhoGaController::class, 'getByTinhTrang']);
-Route::get('/client/chi-tiet-kho-ga/dang-ban/list', [ChiTietKhoGaController::class, 'getDangBan']);
-Route::get('/client/chi-tiet-kho-ga/sap-ban/list', [ChiTietKhoGaController::class, 'getSapBan']);
 
 // Client - Lấy dịch vụ
 Route::get('/client/dich-vu/get-data', [DichVuController::class, 'getData']);
@@ -91,12 +99,21 @@ Route::get('/admin/khach-hang/get-data', [KhachHangController::class, 'getData']
 
 
 //Phim
-Route::get('/admin/phim/get-data', [PhimController::class, 'getData']);
+Route::get('/admin/phim/get-data', [MockPhimController::class, 'getData']);
 Route::post('/admin/phim/add-data', [PhimController::class, 'addData']);
 Route::post('/admin/phim/update', [PhimController::class, 'update']);
 Route::post('/admin/phim/delete', [PhimController::class, 'destroy']);
 Route::post('/admin/phim/change-status', [PhimController::class, 'changeStatus']);
 
+// Mock Chi Tiết Khô Gà (for local testing without database)
+// Khô gà lấy từ database (bảng phims)
+Route::get('/client/chi-tiet-kho-ga/get-data', [ChiTietKhoGaDbController::class, 'getData']);
+Route::get('/client/chi-tiet-kho-ga/{id}', [ChiTietKhoGaDbController::class, 'getChiTiet']);
+Route::get('/client/chi-tiet-kho-ga/dang-ban/list', [ChiTietKhoGaDbController::class, 'getDangBan']);
+Route::get('/client/chi-tiet-kho-ga/sap-ban/list', [ChiTietKhoGaDbController::class, 'getSapBan']);
+
+// Mock Đơn Hàng (for local testing - public endpoint)
+Route::get('/client/don-hang/list', [MockDonHangController::class, 'getData']);
 
 //Thể Loại Phim
 Route::get('/admin/the-loai-phim/get-data', [TheLoaiPhimController::class, 'getData']);

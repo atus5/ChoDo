@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\KhachHang;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class KhachHangSeeder extends Seeder
 {
@@ -12,7 +14,7 @@ class KhachHangSeeder extends Seeder
         // Clear table first
         KhachHang::truncate();
 
-        // Create test accounts
+        // Create test accounts with linked users
         $khachHangs = [
             [
                 'ho_va_ten' => 'Phạm Thị Dung',
@@ -23,6 +25,7 @@ class KhachHangSeeder extends Seeder
                 'ngay_sinh' => '1998-03-25',
                 'is_active' => 1,
                 'is_block' => 0,
+                'user_email' => 'dung.pham@gmail.com',
             ],
             [
                 'ho_va_ten' => 'Nguyễn Văn A',
@@ -33,6 +36,7 @@ class KhachHangSeeder extends Seeder
                 'ngay_sinh' => '1998-03-25',
                 'is_active' => 1,
                 'is_block' => 0,
+                'user_email' => 'nguyenvan.a@gmail.com',
             ],
             [
                 'ho_va_ten' => 'Trần Thị B',
@@ -43,6 +47,7 @@ class KhachHangSeeder extends Seeder
                 'ngay_sinh' => '1998-03-25',
                 'is_active' => 1,
                 'is_block' => 0,
+                'user_email' => 'tranthi.b@gmail.com',
             ],
             [
                 'ho_va_ten' => 'Lê Văn C',
@@ -53,10 +58,27 @@ class KhachHangSeeder extends Seeder
                 'ngay_sinh' => '1998-03-25',
                 'is_active' => 1,
                 'is_block' => 0,
+                'user_email' => 'levan.c@gmail.com',
             ],
         ];
 
         foreach ($khachHangs as $khachHang) {
+            // Extract user_email for later linking
+            $userEmail = $khachHang['user_email'];
+            unset($khachHang['user_email']);
+            
+            // Create or find user
+            $user = User::firstOrCreate(
+                ['email' => $userEmail],
+                [
+                    'name' => $khachHang['ho_va_ten'],
+                    'password' => Hash::make($khachHang['password']),
+                ]
+            );
+            
+            // Add id_user to khach hang
+            $khachHang['id_user'] = $user->id;
+            
             KhachHang::create($khachHang);
         }
     }

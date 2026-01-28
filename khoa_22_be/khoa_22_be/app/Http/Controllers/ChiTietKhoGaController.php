@@ -68,7 +68,20 @@ class ChiTietKhoGaController extends Controller
     public function getDangBan()
     {
         try {
-            $products = ChiTietKhoGa::where('tinh_trang', 2)->get();
+            // Use Phim model as requested by user
+            $products = \App\Models\Phim::where('tinh_trang', 2)->get()->map(function($phim) {
+                return [
+                    'id' => $phim->id,
+                    'ten_kho_ga' => $phim->ten_phim,
+                    'mo_ta' => $phim->mo_ta,
+                    'hinh_anh' => $phim->hinh_anh,
+                    'gia' => $phim->thoi_luong * 1000, // Convert thoi_luong to price estimate
+                    'tinh_trang' => $phim->tinh_trang,
+                    'loai_vi' => 'Truyền thống',
+                    'kich_thuoc' => 'Standard'
+                ];
+            });
+            
             return response()->json([
                 'status' => 'success',
                 'data' => $products
@@ -85,7 +98,20 @@ class ChiTietKhoGaController extends Controller
     public function getSapBan()
     {
         try {
-            $products = ChiTietKhoGa::where('tinh_trang', 1)->get();
+            // Use Phim model as requested by user
+            $products = \App\Models\Phim::where('tinh_trang', 1)->get()->map(function($phim) {
+                return [
+                    'id' => $phim->id,
+                    'ten_kho_ga' => $phim->ten_phim,
+                    'mo_ta' => $phim->mo_ta,
+                    'hinh_anh' => $phim->hinh_anh,
+                    'gia' => $phim->thoi_luong * 1000,
+                    'tinh_trang' => $phim->tinh_trang,
+                    'loai_vi' => 'Sắp ra mắt',
+                    'kich_thuoc' => 'Standard'
+                ];
+            });
+
             return response()->json([
                 'status' => 'success',
                 'data' => $products

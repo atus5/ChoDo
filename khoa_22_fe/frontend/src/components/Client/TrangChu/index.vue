@@ -76,13 +76,52 @@
             </div>
         </div>
 
+        <!-- GỢI Ý KHÔ GÀ HẤP DẪN -->
+        <div class="featured-wrap my-5">
+            <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between mb-3">
+                <div>
+                    <h3 class="mb-1 fw-bold">GỢI Ý KHÔ GÀ HẤP DẪN</h3>
+                    <p class="text-muted mb-0">Chọn ngay vị khô gà đang được yêu thích nhất hôm nay</p>
+                </div>
+                <router-link to="/phim/dang-chieu" class="mt-3 mt-md-0">
+                    <button class="btn btn-danger rounded-pill">Khám phá thêm</button>
+                </router-link>
+            </div>
+            <div class="row g-4">
+                <template v-for="(item, index) in featuredList" :key="index">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card featured-card h-100 border-0 shadow-sm">
+                            <div class="featured-thumb">
+                                <img :src="getImageUrl(item.hinh_anh)" @error="handleImgError" loading="lazy" alt="" />
+                                <span class="badge bg-danger featured-badge">Bán chạy</span>
+                                <div class="featured-rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>{{ formatRating(item) }}</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="fw-bold text-dark mb-2">{{ item.ten_phim }}</h5>
+                                <p class="text-muted small mb-3">{{ item.the_loai || 'Khô gà đặc biệt' }}</p>
+                                <div class="d-flex align-items-center">
+                                    <div class="fw-bold text-danger fs-5">{{ formatVND(item.thoi_luong) }}</div>
+                                    <router-link :to="`/chi-tiet-phim/${item.id}`" class="ms-auto">
+                                        <button class="btn btn-outline-danger btn-sm">Mua ngay</button>
+                                    </router-link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
         <!-- Khô gà bán chạy -->
         <h3 class="text-center">KHÔ GÀ HOT CHỘ ĐÓ</h3>
         <div class="row mt-4">
-            <template v-for="(value, index) in list_phim.filter(x => x.tinh_trang === 2).slice(0, 4)" :key="index">
+            <template v-for="(value, index) in dangBanList" :key="index">
                 <div class="col-lg-3 col-md-6 mb-4">
                     <div class="card position-relative shadow-sm">
-                        <img :src="value.hinh_anh" class="card-img-top" alt=""
+                        <img :src="getImageUrl(value.hinh_anh)" @error="handleImgError" loading="lazy" class="card-img-top" alt=""
                             style="height: 400px; object-fit: cover;">
                         <div class="card-body">
                             <h6 class="card-title text-warning fw-bold">{{ value.ten_phim }}</h6>
@@ -94,7 +133,7 @@
                                     <i class="fa-solid fa-star"></i>
                                     <i class="fa-solid fa-star"></i>
                                     <i class="fa-solid fa-star-half-stroke"></i>
-                                    9.5
+                                    {{ formatRating(value) }}
                                 </span>
                                 <span class="ms-auto fw-bold">
                                     <router-link :to="`/chi-tiet-phim/${value.id}`">
@@ -162,10 +201,10 @@
         <!-- KHÔ GÀ SẮP BÁN -->
         <h3 class="text-center mb-4">KHÔ GÀ SẮP BÁN</h3>
         <div class="row">
-            <template v-for="(value, index) in list_phim.filter(x => x.tinh_trang === 1).slice(0, 4)" :key="index">
+            <template v-for="(value, index) in sapBanList" :key="index">
                 <div class="col-md-3 mb-4 d-flex">
                     <div class="card flex-full w-100" style="background-color: #FFF2F2;">
-                        <img :src="value.hinh_anh" class="card-img-top" style="height: 350px;">
+                        <img :src="getImageUrl(value.hinh_anh)" @error="handleImgError" loading="lazy" class="card-img-top" style="height: 350px; object-fit: cover;">
                         <div class="card-body">
                             <span class="badge bg-danger mb-2">{{ 100000 + index * 2000 }} người đã mua</span>
                             <h5 class="card-title text-truncate text-warning">{{ value.ten_phim }}</h5>
@@ -182,23 +221,69 @@
             </router-link>
         </div>
 
-        <!-- BÀI VIẾT -->
-        <h3 class="text-center mb-4 mt-4">BÀI VIẾT</h3>
-        <div class="row">
-            <template v-for="(value, index) in list_bv.slice(0, 6)" :key="index">
-                <div class="col-lg-4 mb-4 ">
-                    <router-link :to="`/chi-tiet-bai-viet/${value.id}`">
-                        <div class="card h-100">
-                            <img :src="value.hinh_anh" class="card-img-top" style="height: 250px;">
+        <!-- DANH SÁCH KHÔGÀ PHỤ VỤ QUÁN ĂN -->
+        <div style="background-color: #FFF2F2; padding: 40px 20px; margin: 40px 0; border-radius: 10px;">
+            <h3 class="text-center mb-4">KHÔ GÀ PHỤC VỤ QUÁN ĂN, NHÀ HÀNG</h3>
+            <div class="row">
+                <template v-for="(value, index) in list_phim.slice(4, 8)" :key="index">
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card position-relative shadow-sm h-100">
+                            <img :src="getImageUrl(value.hinh_anh)" @error="handleImgError" loading="lazy" class="card-img-top" alt=""
+                                style="height: 350px; object-fit: cover;">
                             <div class="card-body">
-                                <h5 class="card-title text-truncate">{{ value.tieu_de }}
-                                </h5>
-                                <p class="card-text text-dark">{{ value.mo_ta_ngan }}</p>
+                                <h6 class="card-title text-danger fw-bold">{{ value.ten_phim }}</h6>
+                                <p class="text-muted small mb-2">Thành phần: {{ value.dien_vien }}</p>
+                                <p class="text-muted small">{{ value.the_loai }}</p>
+                                <div class="d-flex gap-2 mt-3">
+                                    <router-link :to="`/chi-tiet-phim/${value.id}`" class="flex-grow-1">
+                                        <button class="btn btn-danger btn-sm w-100">Xem chi tiết</button>
+                                    </router-link>
+                                    <button class="btn btn-outline-danger btn-sm">
+                                        <i class="fa fa-heart"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </router-link>
+                    </div>
+                </template>
+            </div>
+            <div class="text-center">
+                <router-link to="/phim/dang-chieu">
+                    <button class="btn btn-danger rounded-pill">Xem tất cả để cung cấp cho quán</button>
+                </router-link>
+            </div>
+        </div>
+
+        <!-- TIN TỨC VÀ HƯỚNG DẪN -->
+        <h3 class="text-center mb-4 mt-5">TIN TỨC VÀ HƯỚNG DẪN</h3>
+        <p class="text-center text-muted mb-4">Cập nhật những bài viết hay về cách chọn, bảo quản và nấu khô gà</p>
+        <div class="row">
+            <template v-for="(value, index) in getArticles()" :key="index">
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0 overflow-hidden article-card">
+                        <div class="position-relative" style="height: 250px; overflow: hidden;">
+                            <img :src="getImageUrl(value.hinh_anh)" @error="handleImgError" loading="lazy" class="card-img-top" style="height: 100%; object-fit: cover;">
+                            <div class="position-absolute top-0 start-0 badge bg-danger" style="margin: 10px;">
+                                <i class="fa fa-calendar-days me-1"></i>{{ formatDate(value.ngay_dang) }}
+                            </div>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <router-link :to="`/chi-tiet-bai-viet/${value.id}`">
+                                <h5 class="card-title fw-bold text-dark article-title">{{ value.tieu_de }}</h5>
+                            </router-link>
+                            <p class="card-text text-muted flex-grow-1">{{ value.mo_ta_ngan || value.mo_ta }}</p>
+                            <router-link :to="`/chi-tiet-bai-viet/${value.id}`" class="btn btn-outline-danger btn-sm">
+                                Đọc thêm <i class="fa fa-arrow-right ms-1"></i>
+                            </router-link>
+                        </div>
+                    </div>
                 </div>
             </template>
+        </div>
+        <div class="text-center mb-5">
+            <router-link to="/bai-viet">
+                <button class="btn btn-outline-danger rounded-pill">Xem tất cả bài viết</button>
+            </router-link>
         </div>
         <h3 class="text-center mb-4 fw-bold ">Khách Hàng Nói Gì Về Khô gà Chộ Đó?</h3>
         <div class="row justify-content-center">
@@ -288,22 +373,204 @@ export default {
         return {
             list_phim: [],
             list_bv: [],
+            isLoading: false,
+            defaultArticles: [
+                {
+                    id: 1,
+                    tieu_de: "5 Cách Nấu Khô Gà Ngon Đạt Đỉnh Mà Bạn Phải Thử",
+                    mo_ta_ngan: "Khô gà không chỉ ăn sống mà còn có thể nấu thành nhiều món ăn ngon khác nhau. Hôm nay chúng tôi sẽ chia sẻ 5 cách nấu khô gà đơn giản nhưng cực ngon.",
+                    mo_ta: "Khô gà không chỉ ăn sống mà còn có thể nấu thành nhiều món ăn ngon khác nhau. Từ canh, xào đến nước lẩu, khô gà lúc nào cũng là nguyên liệu tuyệt vời.",
+                    hinh_anh: "https://voz.vn/attachments/untitled-1-jpg.502903/",
+                    ngay_dang: new Date(2024, 0, 15)
+                },
+                {
+                    id: 2,
+                    tieu_de: "Bí Kíp Chọn Khô Gà Chất Lượng Cao Tại Chộ Đó",
+                    mo_ta_ngan: "Làm sao để chọn được khô gà tươi, ngon và chất lượng cao? Hãy cùng chúng tôi khám phá những tiêu chí quan trọng khi lựa chọn khô gà.",
+                    mo_ta: "Khô gà là một sản phẩm có giá trị dinh dưỡng cao và rất được yêu thích. Nhưng không phải lúc nào chúng ta cũng biết cách chọn khô gà tốt nhất.",
+                    hinh_anh: "https://voz.vn/attachments/untitled-2-jpg.502905/",
+                    ngay_dang: new Date(2024, 0, 12)
+                },
+                {
+                    id: 3,
+                    tieu_de: "Khô Gà Chộ Đó - Hành Trình Từ Yên Lãng Đến Bàn Ăn Của Bạn",
+                    mo_ta_ngan: "Từ những gà ta tự nhiên tại Yên Lãng, qua quá trình chế biến tỉ mỉ đến khi được gửi đến tay bạn, mỗi sản phẩm khô gà Chộ Đó là một câu chuyện.",
+                    mo_ta: "Khô gà Chộ Đó không phải chỉ là một sản phẩm ăn vặt, mà là kết quả của sự tâm huyết và chất lượng trong từng bước chế biến.",
+                    hinh_anh: "https://voz.vn/attachments/untitled-3-jpg.502904/",
+                    ngay_dang: new Date(2024, 0, 10)
+                },
+                {
+                    id: 4,
+                    tieu_de: "Cách Bảo Quản Khô Gà Để Giữ Được Độ Tươi Ngon Lâu Nhất",
+                    mo_ta_ngan: "Bảo quản khô gà đúng cách là chìa khóa để duy trì hương vị và chất lượng của sản phẩm trong thời gian dài.",
+                    mo_ta: "Ngoài chất lượng khô gà, cách bảo quản cũng ảnh hưởng rất lớn đến hương vị cuối cùng của sản phẩm.",
+                    hinh_anh: "https://voz.vn/attachments/untitled-1-jpg.502903/",
+                    ngay_dang: new Date(2024, 0, 8)
+                },
+                {
+                    id: 5,
+                    tieu_de: "Khô Gà và Sức Khỏe - Những Tác Dụng Tuyệt Vời Bạn Chưa Biết",
+                    mo_ta_ngan: "Khô gà không chỉ ngon mà còn rất tốt cho sức khỏe. Hãy cùng khám phá những tác dụng tuyệt vời của khô gà đối với cơ thể chúng ta.",
+                    mo_ta: "Với lượng protein cao và chất dinh dưỡng phong phú, khô gà là lựa chọn tuyệt vời cho những ai quan tâm đến sức khỏe.",
+                    hinh_anh: "https://voz.vn/attachments/untitled-2-jpg.502905/",
+                    ngay_dang: new Date(2024, 0, 5)
+                },
+                {
+                    id: 6,
+                    tieu_de: "Combo Gia Vị Cực Hot - Kết Hợp Hoàn Hảo Cho Khô Gà",
+                    mo_ta_ngan: "Khô gà Chộ Đó tung ra bộ sưu tập combo gia vị mới, đem đến những trải nghiệm hương vị mới lạ và kích thích vị giác.",
+                    mo_ta: "Mỗi combo gia vị đều được chọn lọc kỹ lưỡng để kết hợp hoàn hảo với khô gà, tạo nên những món ăn độc đáo và hấp dẫn.",
+                    hinh_anh: "https://voz.vn/attachments/untitled-3-jpg.502904/",
+                    ngay_dang: new Date(2024, 0, 1)
+                }
+            ]
         }
     },
     mounted() {
         this.loadData();
     },
+    computed: {
+        dangBanList() {
+            return this.filterByStatus(this.list_phim, 2).slice(0, 4);
+        },
+        featuredList() {
+            return this.filterByStatus(this.list_phim, 2).slice(0, 3);
+        },
+        sapBanList() {
+            return this.filterByStatus(this.list_phim, 1).slice(0, 4);
+        }
+    },
     methods: {
+        getImageUrl(imagePath) {
+            const fallback = 'https://placehold.co/800x500?text=Kho+Ga';
+
+            if (!imagePath) return fallback;
+
+            if (/^https?:\/\//i.test(imagePath)) return imagePath;
+
+            if (imagePath.startsWith('/')) return `${axios.defaults.baseURL}${imagePath}`;
+
+            if (imagePath.startsWith('storage/')) return `${axios.defaults.baseURL}/${imagePath}`;
+
+            return `${axios.defaults.baseURL}/storage/${imagePath}`;
+        },
+        handleImgError(event) {
+            event.target.src = 'https://placehold.co/800x500?text=Kho+Ga';
+        },
+        formatRating(item) {
+            const raw = item?.tinh_trang ?? item?.danh_gia;
+            const num = Number(raw);
+            if (Number.isFinite(num)) {
+                const rating = Math.min(Math.max(num, 0), 10);
+                return Number.isInteger(rating) ? rating.toString() : rating.toFixed(1);
+            }
+            if (typeof raw === 'string' && raw.trim()) return raw.trim();
+            return '0';
+        },
+        formatVND(amount) {
+            const value = Number(amount);
+            if (!Number.isFinite(value)) return '0 ₫';
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(value);
+        },
+        filterByStatus(list, status) {
+            const arr = Array.isArray(list) ? list : [];
+            const filtered = arr.filter((item) => Number(item?.tinh_trang) === status);
+            return filtered.length ? filtered : arr;
+        },
+        getArticles() {
+            // Nếu có dữ liệu từ server, sử dụng. Nếu không, dùng dữ liệu mặc định
+            return this.list_bv && this.list_bv.length > 0 
+                ? this.list_bv.slice(0, 6)
+                : this.defaultArticles;
+        },
+        formatDate(date) {
+            if (!date) return '';
+            const d = new Date(date);
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+        },
         loadData() {
-            axios
-                .get('http://127.0.0.1:8000/api/client/home-page')
-                .then((res) => {
-                    this.list_phim = res.data.data_phim;
-                    this.list_bv = res.data.data_bv;
+            this.isLoading = true;
+
+            const frontendBase = window.location.origin;
+            const requests = [
+                axios.get('/api/client/phim/get-data', { timeout: 6000 }),
+                axios.get('/api/client/chi-tiet-kho-ga/get-data', { timeout: 6000 }),
+                axios.get('/api/client/home-page', { timeout: 6000 }),
+                axios.get('/phim-data.json', { baseURL: frontendBase, timeout: 3000 })
+            ];
+
+            Promise.allSettled(requests)
+                .then((results) => {
+                    const [phimRes, khoGaRes, homeRes, jsonRes] = results;
+                    const statusOk = (res) => res?.value?.data?.status === true || res?.value?.data?.status === 'success';
+
+                    if (phimRes.status === 'fulfilled' && statusOk(phimRes.value) && Array.isArray(phimRes.value.data.data)) {
+                        this.list_phim = phimRes.value.data.data.map((item) => ({
+                            id: item.id,
+                            ten_phim: item.ten_phim,
+                            hinh_anh: item.hinh_anh,
+                            mo_ta: item.mo_ta,
+                            tinh_trang: item.tinh_trang,
+                            the_loai: item.ten_the_loai || item.the_loai,
+                            thoi_luong: item.thoi_luong,
+                            dien_vien: item.dien_vien,
+                        }));
+                    }
+
+                    // Fallback sang chi-tiet-kho-ga nếu danh sách trống
+                    if (!this.list_phim.length && khoGaRes.status === 'fulfilled' && statusOk(khoGaRes.value)) {
+                        this.list_phim = khoGaRes.value.data.data.map(item => ({
+                            id: item.id,
+                            ten_phim: item.ten_kho_ga,
+                            hinh_anh: item.hinh_anh,
+                            mo_ta: item.mo_ta,
+                            tinh_trang: item.tinh_trang,
+                            the_loai: item.loai_vi
+                        }));
+                    }
+
+                    const jsonItems = Array.isArray(jsonRes.value?.data)
+                        ? jsonRes.value.data
+                        : Array.isArray(jsonRes.value?.data?.data)
+                            ? jsonRes.value.data.data
+                            : [];
+
+                    if (!this.list_phim.length && jsonRes.status === 'fulfilled' && jsonItems.length) {
+                        this.list_phim = jsonItems.map((item) => ({
+                            id: item.id,
+                            ten_phim: item.ten_phim,
+                            hinh_anh: item.hinh_anh,
+                            mo_ta: item.mo_ta,
+                            tinh_trang: item.tinh_trang,
+                            the_loai: item.ten_the_loai || item.the_loai,
+                            thoi_luong: item.thoi_luong,
+                            dien_vien: item.dien_vien,
+                        }));
+                    }
+
+                    if (homeRes.status === 'fulfilled' && homeRes.value?.data?.data_bv) {
+                        this.list_bv = homeRes.value.data.data_bv;
+                    }
+
+                    // Nếu vẫn không có dữ liệu từ server, để trống và báo lỗi
+                    if (!this.list_phim.length) {
+                        this.list_phim = [];
+                    }
+
+                    if (!this.list_bv.length) {
+                        this.list_bv = [];
+                    }
                 })
                 .catch((err) => {
                     console.error('Load home page error:', err);
-                    this.$toast.error('Không thể tải dữ liệu trang chủ');
+                    this.$toast?.error?.('Không thể tải dữ liệu trang chủ');
+                })
+                .finally(() => {
+                    this.isLoading = false;
                 })
         }
     }
@@ -374,5 +641,88 @@ export default {
 
 .carousel-item-end {
     transform: translateX(100%);
+}
+
+.article-card {
+    transition: all 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.article-title {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.article-card:hover .article-title {
+    color: #dc3545;
+}
+
+.article-card a {
+    text-decoration: none;
+}
+
+.featured-wrap {
+    background: linear-gradient(135deg, #fff7f7, #ffffff);
+    border-radius: 20px;
+    padding: 28px;
+}
+
+.featured-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12) !important;
+}
+
+.featured-thumb {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.featured-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.featured-card:hover .featured-thumb img {
+    transform: scale(1.05);
+}
+
+.featured-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.4px;
+}
+
+.featured-rating {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 </style>

@@ -12,6 +12,7 @@ class DanhGiaSeeder extends Seeder
         $danhGias = [
             [
                 'id_khach_hang' => 1,
+                'id_phim' => 1,
                 'id_ve' => 1,
                 'so_sao' => 5,
                 'noi_dung' => 'Phim rất hay, tôi rất thích cách triển khai cốt truyện và diễn xuất của các diễn viên.',
@@ -19,6 +20,7 @@ class DanhGiaSeeder extends Seeder
             ],
             [
                 'id_khach_hang' => 2,
+                'id_phim' => 2,
                 'id_ve' => 2,
                 'so_sao' => 4,
                 'noi_dung' => 'Nội dung phim thú vị, hiệu ứng hình ảnh đẹp. Tuy nhiên âm thanh hơi nhỏ.',
@@ -26,6 +28,7 @@ class DanhGiaSeeder extends Seeder
             ],
             [
                 'id_khach_hang' => 3,
+                'id_phim' => 1,
                 'id_ve' => 3,
                 'so_sao' => 3,
                 'noi_dung' => 'Phim bình thường, không quá đặc sắc nhưng vẫn đáng xem.',

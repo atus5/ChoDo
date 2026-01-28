@@ -8,6 +8,12 @@ import Toaster from "@meforma/vue-toaster";
 import axios from "axios";
 import { setupErrorInterceptor } from "./utils/errorHandler.js";
 
+// Set axios default base URL for API (use env when available)
+const apiBase = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
+axios.defaults.baseURL = apiBase;
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Accept"] = "application/json";
+
 const app = createApp(App);
 
 app.use(router);
