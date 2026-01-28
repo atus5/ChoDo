@@ -158,7 +158,7 @@ export default {
         getImageUrl(imagePath) {
             const fallback = 'https://placehold.co/600x400?text=Kho+Ga';
 
-            const base = axios.defaults.baseURL || 'http://127.0.0.1:8000';
+            const base = axios.defaults.baseURL || window.location.origin;
 
             if (!imagePath) {
                 return fallback;

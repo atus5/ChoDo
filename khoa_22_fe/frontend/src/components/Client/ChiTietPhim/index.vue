@@ -564,11 +564,12 @@ export default {
         },
         getImageUrl(imagePath) {
             const fallback = 'https://voz.vn/attachments/542754057_1467285577853420_8471185407916019492_n-jpg.3225827/';
+            const base = axios.defaults.baseURL || window.location.origin;
             if (!imagePath) return fallback;
             if (/^https?:\/\//i.test(imagePath)) return imagePath;
-            if (imagePath.startsWith('/')) return `http://127.0.0.1:8000${imagePath}`;
-            if (imagePath.startsWith('storage/')) return `http://127.0.0.1:8000/${imagePath}`;
-            return `http://127.0.0.1:8000/storage/${imagePath}`;
+            if (imagePath.startsWith('/')) return `${base}${imagePath}`;
+            if (imagePath.startsWith('storage/')) return `${base}/${imagePath}`;
+            return `${base}/storage/${imagePath}`;
         },
         getRatingScore() {
             // Display tinh_trang value directly from database

@@ -132,7 +132,7 @@ export default {
         getImageUrl(imagePath) {
             const fallback = 'https://placehold.co/600x400?text=Kho+Ga';
 
-            const base = axios.defaults.baseURL || 'http://127.0.0.1:8000';
+            const base = axios.defaults.baseURL || window.location.origin;
 
             if (!imagePath) {
                 return fallback;
@@ -173,7 +173,7 @@ export default {
         async getPhim() {
             this.isLoading = true;
             const statusOk = (res) => res?.data?.status === true || res?.data?.status === 'success';
-            const base = axios.defaults.baseURL || 'http://127.0.0.1:8000';
+            const base = axios.defaults.baseURL || window.location.origin;
             console.log('Backend URL:', base);
 
             // Attempt 1: API endpoint for phim-dang-chieu

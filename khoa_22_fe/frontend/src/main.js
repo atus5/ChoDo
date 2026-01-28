@@ -9,10 +9,21 @@ import axios from "axios";
 import { setupErrorInterceptor } from "./utils/errorHandler.js";
 
 // Set axios default base URL for API (use env when available)
-const apiBase = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
+const apiBase = (import.meta.env.VITE_API_URL || window.location.origin).replace(/\/+$/, "");
 axios.defaults.baseURL = apiBase;
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Accept"] = "application/json";
+
+// Rewrite any hardcoded localhost API URLs to the current base
+axios.interceptors.request.use((config) => {
+  if (typeof config.url === "string") {
+    const rewritten = config.url
+      .replace(/^http:\/\/127\.0\.0\.1:8000/, apiBase)
+      .replace(/^http:\/\/localhost:8000/, apiBase);
+    return { ...config, url: rewritten };
+  }
+  return config;
+});
 
 const app = createApp(App);
 
