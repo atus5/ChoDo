@@ -45,7 +45,8 @@ services:
     networks:
       - khoa_22_network
     command: >
-      sh -c "php artisan storage:link --force 2>/dev/null;
+      sh -c "if [ ! -f vendor/autoload.php ]; then composer install --no-interaction --prefer-dist --optimize-autoloader; fi;
+      php artisan storage:link --force 2>/dev/null;
       php artisan migrate:fresh --force;
       php artisan db:seed --force;
       php artisan serve --host=0.0.0.0 --port=8000"
