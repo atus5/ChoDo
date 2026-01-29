@@ -7,6 +7,8 @@ vendor/
 node_modules/
 storage/logs/*
 bootstrap/cache/*
+public/storage
 public/storage/*
+public/storage/**
 .DS_Store
 *.log
