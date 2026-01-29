@@ -108,8 +108,9 @@ class PhimController extends Controller
     // Client - Lấy phim đang chiếu với suất chiếu
     public function getPhimDangChieu()
     {
-        // Lấy toàn bộ phim từ bảng phims trong DB LONG_LOL
-        $data = Phim::join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
+        // Chỉ lấy phim đang bán (tinh_trang = 2)
+        $data = Phim::where('phims.tinh_trang', 2)
+            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
             ->select('phims.*', 'the_loai_phims.ten_the_loai')
             ->get();
 
