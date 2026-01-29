@@ -28,7 +28,7 @@
                             <strong>Giá: {{ formatVND(chi_tiet_phim.thoi_luong || 0) }}</strong>
                         </span>
                         <span class="badge bg-warning rounded-pill px-3 py-2 text-dark">
-                            ⭐ {{ chi_tiet_phim.tinh_trang || '4.8/5' }}
+                            ⭐ {{ chi_tiet_phim.rate || '36/36' }}
                         </span>
                     </div>
                 </div>
