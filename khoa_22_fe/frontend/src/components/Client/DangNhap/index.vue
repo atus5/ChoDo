@@ -84,7 +84,7 @@ export default {
     methods: {
         dangNhap() {
             console.log('Gửi request đăng nhập:', this.thong_tin_dang_nhap);
-            axios.post('http://127.0.0.1:8000/api/client/dang-nhap', this.thong_tin_dang_nhap)
+            axios.post('/api/client/dang-nhap', this.thong_tin_dang_nhap)
                 .then((res) => {
                     console.log('=== RESPONSE ĐĂNG NHẬP ===');
                     console.log('res.data:', res.data);

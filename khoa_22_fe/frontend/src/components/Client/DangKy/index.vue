@@ -152,7 +152,7 @@ export default {
 
             this.isLoading = true;
             console.log('Dữ liệu gửi:', this.user);
-            axios.post('http://127.0.0.1:8000/api/client/dang-ky', this.user)
+            axios.post('/api/client/dang-ky', this.user)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
