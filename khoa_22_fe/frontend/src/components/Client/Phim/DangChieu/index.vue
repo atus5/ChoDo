@@ -176,6 +176,28 @@ export default {
             const base = axios.defaults.baseURL || window.location.origin;
             console.log('Backend URL:', base);
 
+            // Attempt 0: API endpoint for kho-ga list (from phims table)
+            try {
+                const resLoai = await axios.get('/api/client/kho-ga/loai-list', { timeout: 6000 });
+                console.log('API Response from kho-ga/loai-list:', resLoai.data);
+                if (statusOk(resLoai) && Array.isArray(resLoai.data.data) && resLoai.data.data.length) {
+                    this.list_phim = resLoai.data.data.map((item) => ({
+                        id: item.id,
+                        ten_phim: item.ten_phim,
+                        hinh_anh: item.hinh_anh,
+                        mo_ta: item.mo_ta,
+                        tinh_trang: item.tinh_trang,
+                        thoi_luong: item.thoi_luong,
+                        dien_vien: item.dien_vien,
+                    }));
+                    this.isLoading = false;
+                    console.log('Loaded kho ga list from API:', this.list_phim.length);
+                    return;
+                }
+            } catch (err) {
+                console.error('Get kho-ga/loai-list error:', err.message);
+            }
+
             // Attempt 1: API endpoint for phim-dang-chieu
             try {
                 const res = await axios.get('/api/client/phim-dang-chieu', { timeout: 6000 });
