@@ -100,7 +100,7 @@
                             </div>
                             <div class="rating-section">
                                 <span class="text-warning fw-bold" style="font-size: 0.95rem;">
-                                    <i class="fa-solid fa-star"></i> {{ product.tinh_trang || 'Sẵn hàng' }}
+                                    <i class="fa-solid fa-star"></i> 36/36
                                 </span>
                             </div>
                         </div>
