@@ -278,4 +278,25 @@ class PhimController extends Controller
             'phim_sap_chieu' => $phimSapChieu
         ]);
     }
+
+    // Client - Danh sách loại khô gà từ bảng phims
+    public function getLoaiKhoGa()
+    {
+        try {
+            $data = Phim::select('id', 'ten_phim', 'hinh_anh', 'mo_ta', 'tinh_trang', 'thoi_luong', 'dien_vien')
+                ->orderBy('id')
+                ->get();
+
+            return response()->json([
+                'status' => true,
+                'data' => $data
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Database error: ' . $e->getMessage(),
+                'data' => []
+            ], 500);
+        }
+    }
 }

@@ -154,6 +154,24 @@
             </router-link>
         </div>
 
+            <!-- DANH SÁCH LOẠI KHÔ GÀ TỪ BẢNG PHIM -->
+            <div class="mt-5">
+                <h3 class="text-center mb-4">DANH SÁCH LOẠI KHÔ GÀ</h3>
+                <div v-if="!loai_kho_ga.length" class="text-center text-muted">Chưa có dữ liệu loại khô gà.</div>
+                <div v-else class="row">
+                    <div v-for="(item, index) in loai_kho_ga" :key="index" class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            <img :src="getImageUrl(item.hinh_anh)" @error="handleImgError" loading="lazy" class="card-img-top" style="height: 220px; object-fit: cover;">
+                            <div class="card-body">
+                                <h6 class="fw-bold text-danger mb-2">{{ item.ten_phim }}</h6>
+                                <p class="text-muted small mb-2">Thành phần: {{ item.dien_vien }}</p>
+                                <span class="badge bg-warning text-dark">{{ formatVND(item.thoi_luong) }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         <!-- Về chúng tôi -->
         <div class="card p-5 border-0 shadow-sm rounded-4" style="background-color: #000957;">
             <h3 class="text-center text-uppercase fw-bold mb-5 text-light">Về chúng tôi</h3>
@@ -373,6 +391,7 @@ export default {
         return {
             list_phim: [],
             list_bv: [],
+                loai_kho_ga: [],
             isLoading: false,
             defaultArticles: [
                 {
@@ -500,12 +519,13 @@ export default {
                 axios.get('/api/client/phim/get-data', { timeout: 6000 }),
                 axios.get('/api/client/chi-tiet-kho-ga/get-data', { timeout: 6000 }),
                 axios.get('/api/client/home-page', { timeout: 6000 }),
+                    axios.get('/api/client/kho-ga/loai-list', { timeout: 6000 }),
                 axios.get('/phim-data.json', { baseURL: frontendBase, timeout: 3000 })
             ];
 
             Promise.allSettled(requests)
                 .then((results) => {
-                    const [phimRes, khoGaRes, homeRes, jsonRes] = results;
+                    const [phimRes, khoGaRes, homeRes, loaiRes, jsonRes] = results;
                     const statusOk = (res) => res?.value?.data?.status === true || res?.value?.data?.status === 'success';
 
                     if (phimRes.status === 'fulfilled' && statusOk(phimRes.value) && Array.isArray(phimRes.value.data.data)) {
@@ -556,10 +576,26 @@ export default {
                         this.list_bv = homeRes.value.data.data_bv;
                     }
 
+                        if (loaiRes.status === 'fulfilled' && statusOk(loaiRes) && Array.isArray(loaiRes.value.data.data)) {
+                            this.loai_kho_ga = loaiRes.value.data.data.map((item) => ({
+                                id: item.id,
+                                ten_phim: item.ten_phim,
+                                hinh_anh: item.hinh_anh,
+                                mo_ta: item.mo_ta,
+                                tinh_trang: item.tinh_trang,
+                                thoi_luong: item.thoi_luong,
+                                dien_vien: item.dien_vien,
+                            }));
+                        }
+
                     // Nếu vẫn không có dữ liệu từ server, để trống và báo lỗi
                     if (!this.list_phim.length) {
                         this.list_phim = [];
                     }
+
+                        if (!this.loai_kho_ga.length) {
+                            this.loai_kho_ga = [];
+                        }
 
                     if (!this.list_bv.length) {
                         this.list_bv = [];

@@ -65,6 +65,7 @@ Route::middleware('auth.api')->group(function () {
 Route::get('/client/home-page', [PhimController::class, 'homePage']);
 Route::get('/client/phim-dang-chieu', [PhimController::class, 'getPhimDangChieu']);
 Route::get('/client/phim/get-data', [PhimController::class, 'getDataClient']);
+Route::get('/client/kho-ga/loai-list', [PhimController::class, 'getLoaiKhoGa']);
 Route::get('/client/kho-ga-sap-ban/get-data', [KhoGaSapBanController::class, 'getData']);
 Route::post('/client/chi-tiet-phim/get-data', [PhimController::class, 'getChiTietPhimData']);
 Route::get('/client/chi-tiet-phim/get-data/{id}', [PhimController::class, 'getChiTietPhimData'])->where('id', '[0-9]+');
