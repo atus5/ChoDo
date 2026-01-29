@@ -373,6 +373,7 @@ export default {
                         ten_phim: data.ten_phim,
                         thoi_luong: Number(data.thoi_luong || 0),
                         tinh_trang: data.tinh_trang || '4.8/5',
+                        rate: data.rate || '36/36',
                         mo_ta: data.mo_ta,
                         dien_vien: data.dien_vien,
                         loai_vi: data.the_loai || this.getRandomFlavor(data.id),
@@ -403,6 +404,7 @@ export default {
                             ten_phim: phimItem.ten_phim,
                             thoi_luong: Number(phimItem.thoi_luong || 0),
                             tinh_trang: phimItem.tinh_trang || '4.8/5',
+                            rate: phimItem.rate || '36/36',
                             mo_ta: phimItem.mo_ta,
                             dien_vien: phimItem.dien_vien,
                             loai_vi: phimItem.the_loai || this.getRandomFlavor(phimItem.id),
@@ -430,6 +432,7 @@ export default {
                         ten_phim: data.ten_kho_ga,
                         thoi_luong: Number(data.gia || data.thoi_luong || 0),
                         tinh_trang: data.tinh_trang || '4.8/5',
+                        rate: data.rate || '36/36',
                         mo_ta: data.mo_ta,
                         dien_vien: data.dien_vien || data.thanh_phan,
                         loai_vi: data.loai_vi || this.getRandomFlavor(data.id),
@@ -573,12 +576,12 @@ export default {
         },
         getRatingScore() {
             // Display tinh_trang value directly from database
-            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5');
+            const ratingStr = String(this.chi_tiet_phim.rate || this.chi_tiet_phim.tinh_trang || '36/36');
             return ratingStr;
         },
         getRatingPercentage() {
             // Convert rating to percentage for progress bar
-            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5');
+            const ratingStr = String(this.chi_tiet_phim.rate || this.chi_tiet_phim.tinh_trang || '36/36');
             // For "X/Y" format, calculate percentage
             if (ratingStr.includes('/')) {
                 const parts = ratingStr.split('/');
@@ -597,7 +600,7 @@ export default {
         },
         getStarDisplay() {
             // Display stars based on rating value
-            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5');
+            const ratingStr = String(this.chi_tiet_phim.rate || this.chi_tiet_phim.tinh_trang || '36/36');
             
             // For "X/Y" format, display X stars
             if (ratingStr.includes('/')) {
@@ -622,7 +625,7 @@ export default {
         },
         getRatingText() {
             // Format rating text - extract review count or default
-            const ratingStr = String(this.chi_tiet_phim.tinh_trang || '4.8/5 (2.5K reviews)');
+            const ratingStr = String(this.chi_tiet_phim.rate || this.chi_tiet_phim.tinh_trang || '36/36');
             // For "X/Y" format (from phims table), use default format
             if (ratingStr.includes('/') && !ratingStr.includes('reviews')) {
                 return '(2.5K reviews)';
