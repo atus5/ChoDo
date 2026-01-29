@@ -11,6 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::hasTable('kho_ga_sap_ban')) {
+            return;
+        }
+
         Schema::create('kho_ga_sap_ban', function (Blueprint $table) {
             $table->id();
             $table->string('ten_kho_ga');

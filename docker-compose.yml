@@ -49,7 +49,7 @@ services:
       sh -c "
       composer install --no-dev --optimize-autoloader &&
       php artisan storage:link || true &&
-      php artisan migrate --force &&
+      php artisan migrate --force || true &&
       php artisan serve --host=0.0.0.0 --port=8000
       "
     restart: unless-stopped
