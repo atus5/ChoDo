@@ -108,8 +108,8 @@ class PhimController extends Controller
     // Client - Lấy phim đang chiếu với suất chiếu
     public function getPhimDangChieu()
     {
-        // Chỉ lấy phim đang bán (tinh_trang = 2)
-        $data = Phim::where('phims.tinh_trang', 2)
+        // Dữ liệu thực tế đang dùng tinh_trang = 1 cho khô gà đang bán
+        $data = Phim::where('phims.tinh_trang', 1)
             ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
             ->select('phims.*', 'the_loai_phims.ten_the_loai')
             ->get();
