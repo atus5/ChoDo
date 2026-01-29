@@ -20,6 +20,7 @@ class PhimSeeder extends Seeder
         $quocGia = '120 Yên Lãng';
         $nhaSanXuat = 'Chộ Đó';
         $hinhAnh = 'https://voz.vn/attachments/542754057_1467285577853420_8471185407916019492_n-jpg.3225827/';
+        $rate = '36/36';
 
         DB::table('phims')->insert([
             [
@@ -37,6 +38,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -56,6 +58,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "MƯỢN TÂY DẠY TÀY\nThằng tây ngồi cạnh thằng tày\nThằng tây khẽ hỏi \"Sao mày từ cha?\"\nThằng tày mới mở lòng ra\n\"Tại vì lão có vợ ba tây à\".\nThằng tây khoái chí cười khà\n\"Vợ ba, vợ bốn ấy là việc ông\nPhận mày chữ Hiếu đếch xong\nMất luôn chữ Đức, đi tong chữ Tài\".\nTày buông một tiếng thở dài\n\"Tiền tao trong thẻ xài hoài chẳng vơi\nChữ Tài, Đức, Hiếu buông lơi\nTao mang chữ Lý để chơi với đời\".",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -75,6 +78,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "Làm con chữ hiếu phải tròn\nLỡ mai không được còn nhìn thấy cha\nNgười dưng thì lại vị tha\nNgười nhà rút một thịt lại ra thế này.\nMùa xuân mùa của sum vầy\nỞ xa đến mấy cũng bay về nhà\nThế mà có kẻ từ cha\nTệ hơn cả Tú Sê Na đi tù.\nCó mắt nhưng chẳng khác mù\nLàm con phải hiếu cho dù ra sao\nĐừng mang cái vẻ thanh cao\nRồi từ cha mẹ khác nào sức sinh.\nKhôn ngoan thấu lý đạt tình\nBiết ơn cha mẹ gia đình ấm êm\nĐừng 10 giờ tối mỗi đêm\nMà lên bêu rếu và blame cha mình.",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -94,6 +98,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "Một cái chết truyền thông\nCác bạn có thấy nó rất phiền không?\nMất quyền, mất tiền, lên án, phê phán\nLôi hết cả cộng đồng bỏ cha\nĐể cả cộng đồng bợ không\nXây trường như hồi trước tốn gạch không?\nCác bạn chưa hiểu mình những chộ truyền thông\nĐể hùa theo một cách rất viển vông\nStreamer nước mình vất vả\nNhưng họ dâng hiến tất cả\nBạn phải đè tem vật vã\nRa xã hội bán khô gà thật đã\nBỏ bàn phím ra, đóng PC vào\nĐi 2 năm chộ đó tao xem nào, tao chả sợ quá\nTrên mạng thì bảo bỏ chơi\nRa đời thì hẳn hai hơi cái gì?\nXin thưa, từ xưa đến nay\nShisha là loại ma tuý duy nhất mà tao chơi!\nCác bạn NPC có muốn mình live nữa không?",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -113,6 +118,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -132,6 +138,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -151,6 +158,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -170,6 +178,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -189,6 +198,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -208,6 +218,7 @@ class PhimSeeder extends Seeder
                 'noi_dung' => "THE INVITATION\nXin gửi bạn một lời thách đấu\nHai ta thi nấu khẩu thành thơ\nTiểu với Đại, không còn bơ vơ\nCó khi ta lại, nên tơ không thành\nMình biết bạn anti anh Ộ\nTôi bị kick từ chộ đó ra\nNhư Rô vẩu với Kaka,\nĐôi ta hợp sức, chết cha anh tày",
                 'nha_san_xuat' => $nhaSanXuat,
                 'tinh_trang' => 1,
+                'rate' => $rate,
                 'id_the_loai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

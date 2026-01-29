@@ -283,7 +283,7 @@ class PhimController extends Controller
     public function getLoaiKhoGa()
     {
         try {
-            $data = Phim::select('id', 'ten_phim', 'hinh_anh', 'mo_ta', 'tinh_trang', 'thoi_luong', 'dien_vien')
+            $data = Phim::select('id', 'ten_phim', 'hinh_anh', 'mo_ta', 'tinh_trang', 'rate', 'thoi_luong', 'dien_vien')
                 ->orderBy('id')
                 ->get();
 

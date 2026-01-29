@@ -100,7 +100,7 @@
                             </div>
                             <div class="rating-section">
                                 <span class="text-warning fw-bold" style="font-size: 0.95rem;">
-                                    <i class="fa-solid fa-star"></i> 36/36 sao
+                                    <i class="fa-solid fa-star"></i> {{ product.rate || '36/36' }}
                                 </span>
                             </div>
                         </div>
@@ -187,6 +187,7 @@ export default {
                         hinh_anh: item.hinh_anh,
                         mo_ta: item.mo_ta,
                         tinh_trang: item.tinh_trang,
+                        rate: item.rate,
                         thoi_luong: item.thoi_luong,
                         dien_vien: item.dien_vien,
                     }));
