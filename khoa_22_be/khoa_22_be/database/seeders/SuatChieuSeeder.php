@@ -30,7 +30,7 @@ class SuatChieuSeeder extends Seeder
             foreach ($gioChieu as $gio) {
                 // Suất chiếu cho phim Avengers: Endgame
                 $suatChieu[] = [
-                    'id_phim' => 1,
+                    'id_kho_ga' => 1,
                     'id_phong_chieu' => 1,
                     'ngay_chieu' => $ngay,
                     'thoi_gian_bat_dau' => $gio['bat_dau'],
@@ -40,7 +40,7 @@ class SuatChieuSeeder extends Seeder
 
                 // Suất chiếu cho phim Frozen II
                 $suatChieu[] = [
-                    'id_phim' => 2,
+                    'id_kho_ga' => 2,
                     'id_phong_chieu' => 2,
                     'ngay_chieu' => $ngay,
                     'thoi_gian_bat_dau' => $gio['bat_dau'],
@@ -50,7 +50,7 @@ class SuatChieuSeeder extends Seeder
 
                 // Suất chiếu cho phim The Conjuring
                 $suatChieu[] = [
-                    'id_phim' => 3,
+                    'id_kho_ga' => 3,
                     'id_phong_chieu' => 3,
                     'ngay_chieu' => $ngay,
                     'thoi_gian_bat_dau' => $gio['bat_dau'],

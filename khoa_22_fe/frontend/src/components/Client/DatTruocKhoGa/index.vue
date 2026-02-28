@@ -6,7 +6,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark mb-3">
                         <li class="breadcrumb-item"><a href="/" class="text-white">Trang Chủ</a></li>
-                        <li class="breadcrumb-item"><a href="/phim/sap-chieu" class="text-white">Khô Gà Sắp Bán</a></li>
+                        <li class="breadcrumb-item"><a href="/kho-ga/sap-ban" class="text-white">Khô Gà Sắp Bán</a></li>
                         <li class="breadcrumb-item active text-white-50" aria-current="page">Đặt trước</li>
                     </ol>
                 </nav>

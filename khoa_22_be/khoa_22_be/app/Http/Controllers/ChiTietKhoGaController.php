@@ -69,10 +69,10 @@ class ChiTietKhoGaController extends Controller
     {
         try {
             // Use Phim model as requested by user
-            $products = \App\Models\Phim::where('tinh_trang', 2)->get()->map(function($phim) {
+            $products = \App\Models\KhoGa::where('tinh_trang', 2)->get()->map(function($phim) {
                 return [
                     'id' => $phim->id,
-                    'ten_kho_ga' => $phim->ten_phim,
+                    'ten_kho_ga' => $phim->ten_kho_ga,
                     'mo_ta' => $phim->mo_ta,
                     'hinh_anh' => $phim->hinh_anh,
                     'gia' => $phim->thoi_luong * 1000, // Convert thoi_luong to price estimate
@@ -99,10 +99,10 @@ class ChiTietKhoGaController extends Controller
     {
         try {
             // Use Phim model as requested by user
-            $products = \App\Models\Phim::where('tinh_trang', 1)->get()->map(function($phim) {
+            $products = \App\Models\KhoGa::where('tinh_trang', 1)->get()->map(function($phim) {
                 return [
                     'id' => $phim->id,
-                    'ten_kho_ga' => $phim->ten_phim,
+                    'ten_kho_ga' => $phim->ten_kho_ga,
                     'mo_ta' => $phim->mo_ta,
                     'hinh_anh' => $phim->hinh_anh,
                     'gia' => $phim->thoi_luong * 1000,

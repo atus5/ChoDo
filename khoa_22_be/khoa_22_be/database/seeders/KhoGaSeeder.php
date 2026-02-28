@@ -6,14 +6,14 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PhimSeeder extends Seeder
+class KhoGaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('phims')->truncate();
+        DB::table('kho_gas')->truncate();
 
         $trailer = 'https://www.youtube.com/watch?v=l3JdTYIHn-o';
         $daoDien = 'Công ty TNHH Chộ Đó Foods';
@@ -22,10 +22,10 @@ class PhimSeeder extends Seeder
         $hinhAnh = 'https://voz.vn/attachments/542754057_1467285577853420_8471185407916019492_n-jpg.3225827/';
         $rate = '36/36';
 
-        DB::table('phims')->insert([
+        DB::table('kho_gas')->insert([
             [
                 'id' => 1,
-                'ten_phim' => 'Khô gà loại 1',
+                'ten_kho_ga' => 'Khô gà loại 1',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Khô là lá chanh',
                 'hinh_anh' => $hinhAnh,
@@ -45,7 +45,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'ten_phim' => 'Khô gà loại 2',
+                'ten_kho_ga' => 'Khô gà loại 2',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Bã mía độ thành khô gà',
                 'hinh_anh' => $hinhAnh,
@@ -65,7 +65,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'ten_phim' => 'Khô gà đè tem',
+                'ten_kho_ga' => 'Khô gà đè tem',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Khô gà Tàu đè tem',
                 'hinh_anh' => $hinhAnh,
@@ -85,7 +85,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 4,
-                'ten_phim' => 'Khô Gà Chua Cay',
+                'ten_kho_ga' => 'Khô Gà Chua Cay',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Vị mặn béo đặc trưng của lòng đỏ trứng muối nghiền mịn bao quanh sợi gà.',
                 'hinh_anh' => $hinhAnh,
@@ -105,7 +105,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'ten_phim' => 'Khô Gà 36',
+                'ten_kho_ga' => 'Khô Gà 36',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Mang hương vị chua cay kiểu Thái, thơm mùi riềng và lá chanh Thái.',
                 'hinh_anh' => $hinhAnh,
@@ -125,7 +125,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'ten_phim' => 'Khô Gà Cay Siêu Cấp',
+                'ten_kho_ga' => 'Khô Gà Cay Siêu Cấp',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Tẩm ướp bột cà ri vàng ươm, hương vị nồng nàn lạ miệng.',
                 'hinh_anh' => $hinhAnh,
@@ -145,7 +145,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 7,
-                'ten_phim' => 'Khô Gà Vàng Ươm',
+                'ten_kho_ga' => 'Khô Gà Vàng Ươm',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Rắc thêm hạt mè rang thơm phức, khi ăn tạo cảm giác bùi bùi.',
                 'hinh_anh' => $hinhAnh,
@@ -165,7 +165,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 8,
-                'ten_phim' => 'Khô Gà Nướng Thơm',
+                'ten_kho_ga' => 'Khô Gà Nướng Thơm',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Vị cay nồng của ớt sa tế và màu đỏ dầu điều rất kích thích.',
                 'hinh_anh' => $hinhAnh,
@@ -185,7 +185,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 9,
-                'ten_phim' => 'Khô Gà Chua Cay',
+                'ten_kho_ga' => 'Khô Gà Chua Cay',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Sử dụng gia vị "hạt tiêu rừng" Tây Bắc, có mùi thơm rất riêng biệt và hơi tê đầu lưỡi.',
                 'hinh_anh' => $hinhAnh,
@@ -205,7 +205,7 @@ class PhimSeeder extends Seeder
             ],
             [
                 'id' => 10,
-                'ten_phim' => 'Khô Gà Cao Bằng',
+                'ten_kho_ga' => 'Khô Gà Cao Bằng',
                 'dao_dien' => $daoDien,
                 'dien_vien' => 'Có mùi thơm khói nhẹ và vị sốt nướng đậm đà kiểu Âu.',
                 'hinh_anh' => $hinhAnh,

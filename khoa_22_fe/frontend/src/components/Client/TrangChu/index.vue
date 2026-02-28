@@ -83,7 +83,7 @@
                     <h3 class="mb-1 fw-bold">GỢI Ý KHÔ GÀ HẤP DẪN</h3>
                     <p class="text-muted mb-0">Chọn ngay vị khô gà đang được yêu thích nhất hôm nay</p>
                 </div>
-                <router-link to="/phim/dang-chieu" class="mt-3 mt-md-0">
+                <router-link to="/kho-ga/dang-ban" class="mt-3 mt-md-0">
                     <button class="btn btn-danger rounded-pill">Khám phá thêm</button>
                 </router-link>
             </div>
@@ -104,7 +104,7 @@
                                 <p class="text-muted small mb-3">{{ item.the_loai || 'Khô gà đặc biệt' }}</p>
                                 <div class="d-flex align-items-center">
                                     <div class="fw-bold text-danger fs-5">{{ formatVND(item.thoi_luong) }}</div>
-                                    <router-link :to="`/chi-tiet-phim/${item.id}`" class="ms-auto">
+                                    <router-link :to="`/chi-tiet-kho-ga/${item.id}`" class="ms-auto">
                                         <button class="btn btn-outline-danger btn-sm">Mua ngay</button>
                                     </router-link>
                                 </div>
@@ -136,7 +136,7 @@
                                     {{ formatRating(value) }}
                                 </span>
                                 <span class="ms-auto fw-bold">
-                                    <router-link :to="`/chi-tiet-phim/${value.id}`">
+                                    <router-link :to="`/chi-tiet-kho-ga/${value.id}`">
                                         <a href="#" class="btn btn-outline-danger w-100">Mua khô gà</a>
                                     </router-link>
                                 </span>
@@ -149,7 +149,7 @@
         </div>
 
         <div class="text-center mb-4">
-            <router-link to="/phim/dang-chieu">
+            <router-link to="/kho-ga/dang-ban">
                 <button class="btn btn-outline-danger rounded-pill">Xem tất cả các loại khô gà</button>
             </router-link>
         </div>
@@ -234,7 +234,7 @@
             </template>
         </div>
         <div class="text-center">
-            <router-link to="/phim/sap-chieu">
+            <router-link to="/kho-ga/sap-ban">
                 <button class="btn btn-outline-danger rounded-pill ">Xem tất cả các loại khô gà</button>
             </router-link>
         </div>
@@ -253,7 +253,7 @@
                                 <p class="text-muted small mb-2">Thành phần: {{ value.dien_vien }}</p>
                                 <p class="text-muted small">{{ value.the_loai }}</p>
                                 <div class="d-flex gap-2 mt-3">
-                                    <router-link :to="`/chi-tiet-phim/${value.id}`" class="flex-grow-1">
+                                    <router-link :to="`/chi-tiet-kho-ga/${value.id}`" class="flex-grow-1">
                                         <button class="btn btn-danger btn-sm w-100">Xem chi tiết</button>
                                     </router-link>
                                     <button class="btn btn-outline-danger btn-sm">
@@ -266,7 +266,7 @@
                 </template>
             </div>
             <div class="text-center">
-                <router-link to="/phim/dang-chieu">
+                <router-link to="/kho-ga/dang-ban">
                     <button class="btn btn-danger rounded-pill">Xem tất cả để cung cấp cho quán</button>
                 </router-link>
             </div>
@@ -520,7 +520,7 @@ export default {
                 axios.get('/api/client/chi-tiet-kho-ga/get-data', { timeout: 6000 }),
                 axios.get('/api/client/home-page', { timeout: 6000 }),
                     axios.get('/api/client/kho-ga/loai-list', { timeout: 6000 }),
-                axios.get('/phim-data.json', { baseURL: frontendBase, timeout: 3000 })
+                axios.get('/kho-ga-data.json', { baseURL: frontendBase, timeout: 3000 })
             ];
 
             Promise.allSettled(requests)

@@ -3,13 +3,13 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChucNangController;
 use App\Http\Controllers\ChucVuController;
-use App\Http\Controllers\TheLoaiPhimController;
+use App\Http\Controllers\LoaiKhoGaController;
 use App\Http\Controllers\PhongChieuController;
 use App\Http\Controllers\DichVuController;
 use App\Http\Controllers\GheController;
 use App\Http\Controllers\KhachHangController;
 use App\Http\Controllers\NhanVienController;
-use App\Http\Controllers\PhimController;
+use App\Http\Controllers\KhoGaController;
 use App\Http\Controllers\SuatChieuController;
 use App\Http\Controllers\TinTucController;
 use App\Http\Controllers\VeController;
@@ -17,7 +17,7 @@ use App\Http\Controllers\DonHangController;
 use App\Http\Controllers\ChiTietKhoGaController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\DanhGiaController;
-use App\Http\Controllers\MockPhimController;
+use App\Http\Controllers\MockKhoGaController;
 use App\Http\Controllers\MockChiTietKhoGaController;
 use App\Http\Controllers\ChiTietKhoGaDbController;
 use App\Http\Controllers\MockDonHangController;
@@ -61,18 +61,25 @@ Route::middleware('auth.api')->group(function () {
     Route::delete('/client/don-hang/{id}', [DonHangController::class, 'huyVe'])->where('id', '[0-9]+');
 });
 
-// Client - Phim đang chiếu
-Route::get('/client/home-page', [PhimController::class, 'homePage']);
-Route::get('/client/phim-dang-chieu', [PhimController::class, 'getPhimDangChieu']);
-Route::get('/client/phim/get-data', [PhimController::class, 'getDataClient']);
-Route::get('/client/kho-ga/loai-list', [PhimController::class, 'getLoaiKhoGa']);
+// Client - Khô gà
+Route::get('/client/home-page', [KhoGaController::class, 'homePage']);
+Route::get('/client/kho-ga/dang-ban', [KhoGaController::class, 'getPhimDangChieu']);
+Route::get('/client/kho-ga/get-data', [KhoGaController::class, 'getDataClient']);
+Route::get('/client/kho-ga/loai-list', [KhoGaController::class, 'getLoaiKhoGa']);
+Route::get('/client/phim-dang-chieu', [KhoGaController::class, 'getPhimDangChieu']);
+Route::get('/client/phim/get-data', [KhoGaController::class, 'getDataClient']);
 Route::get('/client/kho-ga-sap-ban/get-data', [KhoGaSapBanController::class, 'getData']);
-Route::post('/client/chi-tiet-phim/get-data', [PhimController::class, 'getChiTietPhimData']);
-Route::get('/client/chi-tiet-phim/get-data/{id}', [PhimController::class, 'getChiTietPhimData'])->where('id', '[0-9]+');
-Route::get('/client/phim/{id}', [PhimController::class, 'getChiTietPhim']);
+Route::post('/client/chi-tiet-kho-ga/get-data', [KhoGaController::class, 'getChiTietPhimData']);
+Route::get('/client/chi-tiet-kho-ga/get-data/{id}', [KhoGaController::class, 'getChiTietPhimData'])->where('id', '[0-9]+');
+Route::get('/client/kho-ga/{id}', [KhoGaController::class, 'getChiTietPhim']);
+Route::post('/client/chi-tiet-phim/get-data', [KhoGaController::class, 'getChiTietPhimData']);
+Route::get('/client/chi-tiet-phim/get-data/{id}', [KhoGaController::class, 'getChiTietPhimData'])->where('id', '[0-9]+');
+Route::get('/client/phim/{id}', [KhoGaController::class, 'getChiTietPhim']);
 Route::get('/client/suat-chieu/{id}/ghe', [SuatChieuController::class, 'getGheOfSuatChieu']);
 
 // Client - Comment/Rating
+Route::post('/client/chi-tiet-kho-ga/binh-luan', [DanhGiaController::class, 'binh_luan']);
+Route::get('/client/chi-tiet-kho-ga/binh-luan/get-data/{id_phim}', [DanhGiaController::class, 'binh_luan_get_data']);
 Route::post('/client/chi-tiet-phim/binh-luan', [DanhGiaController::class, 'binh_luan']);
 Route::get('/client/chi-tiet-phim/binh-luan/get-data/{id_phim}', [DanhGiaController::class, 'binh_luan_get_data']);
 
@@ -99,15 +106,15 @@ Route::get('/admin/chuc-nang/get-data', [ChucNangController::class, 'getData']);
 Route::get('/admin/khach-hang/get-data', [KhachHangController::class, 'getData']);
 
 
-//Phim
-Route::get('/admin/phim/get-data', [MockPhimController::class, 'getData']);
-Route::post('/admin/phim/add-data', [PhimController::class, 'addData']);
-Route::post('/admin/phim/update', [PhimController::class, 'update']);
-Route::post('/admin/phim/delete', [PhimController::class, 'destroy']);
-Route::post('/admin/phim/change-status', [PhimController::class, 'changeStatus']);
+//Khô gà
+Route::get('/admin/kho-ga/get-data', [MockKhoGaController::class, 'getData']);
+Route::post('/admin/kho-ga/add-data', [KhoGaController::class, 'addData']);
+Route::post('/admin/kho-ga/update', [KhoGaController::class, 'update']);
+Route::post('/admin/kho-ga/delete', [KhoGaController::class, 'destroy']);
+Route::post('/admin/kho-ga/change-status', [KhoGaController::class, 'changeStatus']);
 
 // Mock Chi Tiết Khô Gà (for local testing without database)
-// Khô gà lấy từ database (bảng phims)
+// Khô gà lấy từ database (bảng kho_gas)
 Route::get('/client/chi-tiet-kho-ga/get-data', [ChiTietKhoGaDbController::class, 'getData']);
 Route::get('/client/chi-tiet-kho-ga/{id}', [ChiTietKhoGaDbController::class, 'getChiTiet']);
 Route::get('/client/chi-tiet-kho-ga/dang-ban/list', [ChiTietKhoGaDbController::class, 'getDangBan']);
@@ -117,11 +124,11 @@ Route::get('/client/chi-tiet-kho-ga/sap-ban/list', [ChiTietKhoGaDbController::cl
 Route::get('/client/don-hang/list', [MockDonHangController::class, 'getData']);
 
 //Thể Loại Phim
-Route::get('/admin/the-loai-phim/get-data', [TheLoaiPhimController::class, 'getData']);
-Route::post('/admin/the-loai-phim/add-data', [TheLoaiPhimController::class, 'addData']);
-Route::post('/admin/the-loai-phim/update', [TheLoaiPhimController::class, 'update']);
-Route::post('/admin/the-loai-phim/delete', [TheLoaiPhimController::class, 'destroy']);
-Route::post('/admin/the-loai-phim/change-status', [TheLoaiPhimController::class, 'changeStatus']);
+Route::get('/admin/loai-kho-ga/get-data', [LoaiKhoGaController::class, 'getData']);
+Route::post('/admin/loai-kho-ga/add-data', [LoaiKhoGaController::class, 'addData']);
+Route::post('/admin/loai-kho-ga/update', [LoaiKhoGaController::class, 'update']);
+Route::post('/admin/loai-kho-ga/delete', [LoaiKhoGaController::class, 'destroy']);
+Route::post('/admin/loai-kho-ga/change-status', [LoaiKhoGaController::class, 'changeStatus']);
 
 
 //Phong Chieu

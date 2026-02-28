@@ -6,11 +6,11 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class TheLoaiPhimSeeder extends Seeder
+class LoaiKhoGaSeeder extends Seeder
 {
     public function run(): void
     {
-        $theLoaiPhim = [
+        $loaiKhoGa = [
             [
                 'ten_the_loai' => 'Hành động',
                 'slug_the_loai' => Str::slug('Hành động'),
@@ -53,8 +53,8 @@ class TheLoaiPhimSeeder extends Seeder
             ],
         ];
 
-        DB::table('the_loai_phims')->truncate();
-        DB::table('the_loai_phims')->delete();
-        DB::table('the_loai_phims')->insert($theLoaiPhim);
+        DB::table('loai_kho_gas')->truncate();
+        DB::table('loai_kho_gas')->delete();
+        DB::table('loai_kho_gas')->insert($loaiKhoGa);
     }
 }

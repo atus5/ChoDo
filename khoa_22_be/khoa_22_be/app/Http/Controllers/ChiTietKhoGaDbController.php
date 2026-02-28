@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phim;
+use App\Models\KhoGa;
 use App\Models\ChiTietKhoGa;
 use Illuminate\Http\Request;
 
@@ -91,7 +91,7 @@ class ChiTietKhoGaDbController extends Controller
 
         return [
             'id'           => $phim->id,
-            'ten_kho_ga'   => $phim->ten_phim,
+            'ten_kho_ga'   => $phim->ten_kho_ga,
             'mo_ta'        => $phim->mo_ta,
             'noi_dung'     => $phim->noi_dung,
             'hinh_anh'     => $image,
@@ -121,8 +121,8 @@ class ChiTietKhoGaDbController extends Controller
                 ]);
             }
 
-            $products = Phim::leftJoin('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-                ->select('phims.*', 'the_loai_phims.ten_the_loai')
+            $products = KhoGa::leftJoin('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+                ->select('kho_gas.*', 'loai_kho_gas.ten_the_loai')
                 ->get()
                 ->map(fn($p) => $this->mapPhimToKhoGa($p));
 
@@ -154,9 +154,9 @@ class ChiTietKhoGaDbController extends Controller
                 ]);
             }
 
-            $products = Phim::where('phims.tinh_trang', 2)
-                ->leftJoin('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-                ->select('phims.*', 'the_loai_phims.ten_the_loai')
+            $products = KhoGa::where('kho_gas.tinh_trang', 2)
+                ->leftJoin('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+                ->select('kho_gas.*', 'loai_kho_gas.ten_the_loai')
                 ->get()
                 ->map(fn($p) => $this->mapPhimToKhoGa($p));
 
@@ -188,9 +188,9 @@ class ChiTietKhoGaDbController extends Controller
                 ]);
             }
 
-            $products = Phim::where('phims.tinh_trang', 1)
-                ->leftJoin('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-                ->select('phims.*', 'the_loai_phims.ten_the_loai')
+            $products = KhoGa::where('kho_gas.tinh_trang', 1)
+                ->leftJoin('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+                ->select('kho_gas.*', 'loai_kho_gas.ten_the_loai')
                 ->get()
                 ->map(fn($p) => $this->mapPhimToKhoGa($p));
 
@@ -219,9 +219,9 @@ class ChiTietKhoGaDbController extends Controller
                 ]);
             }
 
-            $phim = Phim::where('phims.id', $id)
-                ->leftJoin('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-                ->select('phims.*', 'the_loai_phims.ten_the_loai')
+            $phim = KhoGa::where('kho_gas.id', $id)
+                ->leftJoin('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+                ->select('kho_gas.*', 'loai_kho_gas.ten_the_loai')
                 ->first();
 
             if (!$phim) {

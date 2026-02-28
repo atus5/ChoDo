@@ -55,9 +55,9 @@
 						<div class="menu-title">Quản lý sản phẩm</div>
 					</a>
 					<ul class="dropdown-menu show" data-bs-popper="static">
-						<router-link to="/admin/phim">
+						<router-link to="/admin/kho-ga">
 							<li>
-								<a class="dropdown-item" href="/admin/phim"><i
+								<a class="dropdown-item" href="/admin/kho-ga"><i
 										class="bx bx-right-arrow-alt"></i>Sản phẩm</a>
 							</li>
 						</router-link>
@@ -205,9 +205,9 @@
 										class="bx bx-right-arrow-alt"></i>Thống Kê Kỳ Bán</a>
 							</li>
 						</router-link>
-						<router-link to="/admin/thong-ke/phim">
+						<router-link to="/admin/thong-ke/kho-ga">
 							<li>
-								<a class="dropdown-item" href="/admin/thong-ke/phim"><i
+								<a class="dropdown-item" href="/admin/thong-ke/kho-ga"><i
 										class="bx bx-right-arrow-alt"></i>Thống Kê Sản Phẩm</a>
 							</li>
 						</router-link>

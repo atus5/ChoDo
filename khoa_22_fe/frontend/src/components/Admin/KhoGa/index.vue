@@ -372,7 +372,7 @@ export default {
     },
     methods: {
         timKiem() {
-            axios.post('/api/admin/phim/tim-kiem', this.tim_kiem)
+            axios.post('/api/admin/kho-ga/tim-kiem', this.tim_kiem)
                 .then((res) => {
                     this.list_phim = res.data.data;
                 })
@@ -382,7 +382,7 @@ export default {
         },
         getPhim() {
             axios
-                .get('/api/admin/phim/get-data')
+                .get('/api/admin/kho-ga/get-data')
                 .then((res) => {
                     this.list_phim = res.data.data;
                     console.log('Phim loaded:', this.list_phim);
@@ -393,7 +393,7 @@ export default {
                 });
         },
         themPhim() {
-            axios.post('/api/admin/phim/add-data', this.create_phim)
+            axios.post('/api/admin/kho-ga/add-data', this.create_phim)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -403,7 +403,7 @@ export default {
                 });
         },
         capNhatPhim() {
-            axios.post('/api/admin/phim/update', this.edit_phim)
+            axios.post('/api/admin/kho-ga/update', this.edit_phim)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -412,7 +412,7 @@ export default {
                 });
         },
         xoaPhim() {
-            axios.post('/api/admin/phim/delete', this.del_phim)
+            axios.post('/api/admin/kho-ga/delete', this.del_phim)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
@@ -421,7 +421,7 @@ export default {
                 });
         },
         doiTrangThai(value) {
-            axios.post('/api/admin/phim/change-status', value)
+            axios.post('/api/admin/kho-ga/change-status', value)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);

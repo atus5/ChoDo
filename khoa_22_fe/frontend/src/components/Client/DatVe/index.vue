@@ -230,12 +230,12 @@ export default {
                         this.loadThongTinPhim();
                     } else {
                         this.$toast.error(res.data.message);
-                        this.$router.push('/phim/dang-chieu');
+                        this.$router.push('/kho-ga/dang-ban');
                     }
                 })
                 .catch((err) => {
                     this.$toast.error('Không thể tải thông tin suất chiếu');
-                    this.$router.push('/phim/dang-chieu');
+                    this.$router.push('/kho-ga/dang-ban');
                 });
         },
         loadDichVu() {

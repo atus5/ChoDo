@@ -22,12 +22,12 @@
                                 Khô Gà
                             </a>
                             <ul class="dropdown-menu">
-                                <router-link to="/phim/dang-chieu">
-                                    <li><a class="dropdown-item" href="/phim/dang-chieu">Khô Gà Đang Bán</a>
+                                <router-link to="/kho-ga/dang-ban">
+                                    <li><a class="dropdown-item" href="/kho-ga/dang-ban">Khô Gà Đang Bán</a>
                                     </li>
                                 </router-link>
-                                <router-link to="/phim/sap-chieu">
-                                    <li><a class="dropdown-item" href="/phim/sap-chieu">Khô Gà Sắp Bán</a>
+                                <router-link to="/kho-ga/sap-ban">
+                                    <li><a class="dropdown-item" href="/kho-ga/sap-ban">Khô Gà Sắp Bán</a>
                                     </li>
                                 </router-link>
                             </ul>

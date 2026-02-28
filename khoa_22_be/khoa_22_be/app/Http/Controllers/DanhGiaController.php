@@ -28,7 +28,7 @@ class DanhGiaController extends Controller
 
         DanhGia::create([
             'id_khach_hang' => $khachHang->id,
-            'id_phim' => $request->id_phim,
+            'id_kho_ga' => $request->id_kho_ga ?? $request->id_phim,
             'noi_dung' => $request->noi_dung_binh_luan,
             'so_sao' => $request->so_sao ?? 5,
             'tinh_trang' => 1
@@ -42,7 +42,7 @@ class DanhGiaController extends Controller
 
     public function binh_luan_get_data($id_phim)
     {
-        $data = DanhGia::where('id_phim', $id_phim)
+        $data = DanhGia::where('id_kho_ga', $id_phim)
             ->where('tinh_trang', 1)
             ->join('khach_hangs', 'danh_gias.id_khach_hang', '=', 'khach_hangs.id')
             ->join('users', 'khach_hangs.id_user', '=', 'users.id')

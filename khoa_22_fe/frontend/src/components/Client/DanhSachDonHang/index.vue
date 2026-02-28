@@ -120,7 +120,7 @@
                 <i class="fa-solid fa-inbox" style="font-size: 48px; margin-bottom: 20px; display: block;"></i>
                 <p class="fs-5 fw-bold">Chưa có đơn hàng nào</p>
                 <p class="text-muted">Hãy bắt đầu mua sắm khô gà chất lượng cao của chúng tôi ngay!</p>
-                <router-link to="/phim/dang-chieu" class="btn btn-danger mt-3">
+                <router-link to="/kho-ga/dang-ban" class="btn btn-danger mt-3">
                     <i class="fa-solid fa-shopping-cart me-2"></i>Bắt đầu mua sắm
                 </router-link>
             </div>

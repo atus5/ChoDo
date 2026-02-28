@@ -84,9 +84,9 @@ class DonHangController extends Controller
         $donHangs = DonHang::where('id_khach_hang', $user->id)
             ->with(['ves' => function($query) {
                 $query->join('suat_chieus', 'suat_chieus.id', '=', 'ves.id_suat_chieu')
-                    ->join('phims', 'phims.id', '=', 'suat_chieus.id_phim')
+                    ->join('kho_gas', 'kho_gas.id', '=', 'suat_chieus.id_kho_ga')
                     ->join('phong_chieus', 'phong_chieus.id', '=', 'suat_chieus.id_phong_chieu')
-                    ->select('ves.*', 'phims.ten_phim', 'phong_chieus.ten_phong', 'suat_chieus.ngay_chieu', 'suat_chieus.thoi_gian_bat_dau');
+                    ->select('ves.*', 'kho_gas.ten_kho_ga as ten_phim', 'phong_chieus.ten_phong', 'suat_chieus.ngay_chieu', 'suat_chieus.thoi_gian_bat_dau');
             }])
             ->orderBy('created_at', 'desc')
             ->get();

@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MockPhimController extends Controller
+class MockKhoGaController extends Controller
 {
     public function getData()
     {
         $mockData = [
             [
                 'id' => 1,
-                'ten_phim' => 'Khô Gà Siêu Cấp',
+                'ten_kho_ga' => 'Khô Gà Siêu Cấp',
                 'dao_dien' => 'Đạo diễn A',
                 'dien_vien' => 'Diễn viên A',
                 'hinh_anh' => 'https://via.placeholder.com/300x450?text=Kho+Ga+Sieu+Cap',
@@ -27,7 +27,7 @@ class MockPhimController extends Controller
             ],
             [
                 'id' => 2,
-                'ten_phim' => 'Khô Gà Vàng Ươm',
+                'ten_kho_ga' => 'Khô Gà Vàng Ươm',
                 'dao_dien' => 'Đạo diễn B',
                 'dien_vien' => 'Diễn viên B',
                 'hinh_anh' => 'https://via.placeholder.com/300x450?text=Kho+Ga+Vang+Uom',
@@ -43,7 +43,7 @@ class MockPhimController extends Controller
             ],
             [
                 'id' => 3,
-                'ten_phim' => 'Khô Gà Nướng Thơm',
+                'ten_kho_ga' => 'Khô Gà Nướng Thơm',
                 'dao_dien' => 'Đạo diễn C',
                 'dien_vien' => 'Diễn viên C',
                 'hinh_anh' => 'https://via.placeholder.com/300x450?text=Kho+Ga+Nuong+Thom',

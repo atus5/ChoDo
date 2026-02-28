@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Phim;
+use App\Models\KhoGa;
 use Illuminate\Http\Request;
 
-class PhimController extends Controller
+class KhoGaController extends Controller
 {
     public function getData()
     {
         try {
-            $data = Phim::join('the_loai_phims', 'phims.id_the_loai',  'the_loai_phims.id')
-                ->select('phims.*', 'the_loai_phims.ten_the_loai')
+            $data = KhoGa::join('loai_kho_gas', 'kho_gas.id_the_loai',  'loai_kho_gas.id')
+                ->select('kho_gas.*', 'kho_gas.ten_kho_ga as ten_phim', 'loai_kho_gas.ten_the_loai')
                 ->get();
 
             return response()->json([
@@ -29,8 +29,10 @@ class PhimController extends Controller
 
     public function addData(Request $request)
     {
-        Phim::create([
-            'ten_phim'          => $request->ten_phim,
+        $tenKhoGa = $request->ten_kho_ga ?? $request->ten_phim;
+
+        KhoGa::create([
+            'ten_kho_ga'        => $tenKhoGa,
             'dao_dien'          => $request->dao_dien,
             'dien_vien'         => $request->dien_vien,
             'ngay_phat_hanh'    => $request->ngay_phat_hanh,
@@ -48,14 +50,16 @@ class PhimController extends Controller
 
         return response()->json([
             'status'    => true,
-            'message'   => 'Thêm phim ' . $request->ten_phim . ' thành công',
+            'message'   => 'Thêm khô gà ' . $tenKhoGa . ' thành công',
         ]);
     }
 
     public function update(Request $request)
     {
-        Phim::where('id', $request->id)->update([
-            'ten_phim'          => $request->ten_phim,
+        $tenKhoGa = $request->ten_kho_ga ?? $request->ten_phim;
+
+        KhoGa::where('id', $request->id)->update([
+            'ten_kho_ga'        => $tenKhoGa,
             'dao_dien'          => $request->dao_dien,
             'dien_vien'         => $request->dien_vien,
             'ngay_phat_hanh'    => $request->ngay_phat_hanh,
@@ -73,13 +77,13 @@ class PhimController extends Controller
 
         return response()->json([
             'status'    => true,
-            'message'   => 'Cập nhật phim ' . $request->ten_phim . ' thành công',
+            'message'   => 'Cập nhật khô gà ' . $tenKhoGa . ' thành công',
         ]);
     }
 
     public function destroy(Request $request)
     {
-        Phim::where('id', $request->id)->delete();
+        KhoGa::where('id', $request->id)->delete();
 
         return response()->json([
             'status'    => true,
@@ -88,7 +92,7 @@ class PhimController extends Controller
     }
     public function changeStatus(Request $request)
     {
-        $phim = Phim::where('id', $request->id)->first();
+        $phim = KhoGa::where('id', $request->id)->first();
         if($phim->tinh_trang == 0)
             $phim->tinh_trang = 1;
         else if($phim->tinh_trang == 1)
@@ -105,13 +109,13 @@ class PhimController extends Controller
         ]);
     }
 
-    // Client - Lấy phim đang chiếu với suất chiếu
+    // Client - Lấy khô gà đang bán
     public function getPhimDangChieu()
     {
         // Dữ liệu thực tế đang dùng tinh_trang = 1 cho khô gà đang bán
-        $data = Phim::where('phims.tinh_trang', 1)
-            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-            ->select('phims.*', 'the_loai_phims.ten_the_loai')
+        $data = KhoGa::where('kho_gas.tinh_trang', 1)
+            ->join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+            ->select('kho_gas.*', 'kho_gas.ten_kho_ga as ten_phim', 'loai_kho_gas.ten_the_loai')
             ->get();
 
         return response()->json([
@@ -120,21 +124,21 @@ class PhimController extends Controller
         ]);
     }
 
-    // Client - Lấy tất cả phim đang chiếu và sắp chiếu
+    // Client - Lấy tất cả khô gà đang bán và sắp bán
     public function getDataClient()
     {
         // Không lọc tinh_trang vì dữ liệu hiện lưu chuỗi, trả full để frontend tự hiển thị
-        $data = Phim::join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
+        $data = KhoGa::join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
             ->select(
-                'phims.id',
-                'phims.ten_phim',
-                'phims.hinh_anh',
-                'phims.mo_ta',
-                'phims.tinh_trang',
-                'phims.id_the_loai',
-                'phims.thoi_luong',
-                'phims.dien_vien',
-                'the_loai_phims.ten_the_loai'
+                'kho_gas.id',
+                'kho_gas.ten_kho_ga as ten_phim',
+                'kho_gas.hinh_anh',
+                'kho_gas.mo_ta',
+                'kho_gas.tinh_trang',
+                'kho_gas.id_the_loai',
+                'kho_gas.thoi_luong',
+                'kho_gas.dien_vien',
+                'loai_kho_gas.ten_the_loai'
             )
             ->limit(20)
             ->get();
@@ -148,15 +152,15 @@ class PhimController extends Controller
     // Client - Lấy chi tiết phim
     public function getChiTietPhim($id)
     {
-        $phim = Phim::where('id', $id)
-            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-            ->select('phims.*', 'the_loai_phims.ten_the_loai')
+        $phim = KhoGa::where('id', $id)
+            ->join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+            ->select('kho_gas.*', 'kho_gas.ten_kho_ga as ten_phim', 'loai_kho_gas.ten_the_loai')
             ->first();
 
         if (!$phim) {
             return response()->json([
                 'status' => false,
-                'message' => 'Phim không tồn tại'
+                'message' => 'Khô gà không tồn tại'
             ], 404);
         }
 
@@ -174,31 +178,31 @@ class PhimController extends Controller
             $id = $request->id;
         }
         
-        $phim = Phim::where('phims.id', $id)
-            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-            ->select('phims.*', 'the_loai_phims.ten_the_loai as the_loai')
+        $phim = KhoGa::where('kho_gas.id', $id)
+            ->join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+            ->select('kho_gas.*', 'kho_gas.ten_kho_ga as ten_phim', 'loai_kho_gas.ten_the_loai as the_loai')
             ->first();
 
         if (!$phim) {
             return response()->json([
                 'status' => false,
-                'message' => 'Phim không tồn tại'
+                'message' => 'Khô gà không tồn tại'
             ], 404);
         }
 
         // Lấy suất chiếu
-        $suatChieu = \App\Models\SuatChieu::where('suat_chieus.id_phim', $id)
+        $suatChieu = \App\Models\SuatChieu::where('suat_chieus.id_kho_ga', $id)
             ->where('suat_chieus.tinh_trang', '!=', 3)
             ->where('suat_chieus.ngay_chieu', '>=', now()->format('Y-m-d'))
             ->join('phong_chieus', 'suat_chieus.id_phong_chieu', '=', 'phong_chieus.id')
-            ->select('suat_chieus.id', 'suat_chieus.id_phim', 'suat_chieus.id_phong_chieu', 'suat_chieus.ngay_chieu', 'suat_chieus.thoi_gian_bat_dau', 'suat_chieus.thoi_gian_ket_thuc', 'suat_chieus.gia_ve', 'suat_chieus.tinh_trang', 'phong_chieus.ten_phong')
+            ->select('suat_chieus.id', 'suat_chieus.id_kho_ga', 'suat_chieus.id_kho_ga as id_phim', 'suat_chieus.id_phong_chieu', 'suat_chieus.ngay_chieu', 'suat_chieus.thoi_gian_bat_dau', 'suat_chieus.thoi_gian_ket_thuc', 'suat_chieus.gia_ve', 'suat_chieus.tinh_trang', 'phong_chieus.ten_phong')
             ->get();
 
         // Lấy phim khác (cùng thể loại hoặc đang chiếu khác)
-        $phimKhac = Phim::where('phims.id', '!=', $id)
-            ->whereIn('phims.tinh_trang', [1, 2])
-            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-            ->select('phims.*', 'the_loai_phims.ten_the_loai')
+        $phimKhac = KhoGa::where('kho_gas.id', '!=', $id)
+            ->whereIn('kho_gas.tinh_trang', [1, 2])
+            ->join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+            ->select('kho_gas.*', 'kho_gas.ten_kho_ga as ten_phim', 'loai_kho_gas.ten_the_loai')
             ->limit(4)
             ->get();
 
@@ -213,17 +217,17 @@ class PhimController extends Controller
     // Client - Home page
     public function homePage()
     {
-        // Phim đang chiếu (tinh_trang = 2)
-        $phimDangChieu = Phim::where('phims.tinh_trang', 2)
-            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-            ->select('phims.id', 'phims.ten_phim', 'phims.hinh_anh', 'phims.mo_ta', 'phims.tinh_trang', 'phims.id_the_loai', 'the_loai_phims.ten_the_loai as the_loai')
+        // Khô gà đang bán (tinh_trang = 2)
+        $phimDangChieu = KhoGa::where('kho_gas.tinh_trang', 2)
+            ->join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+            ->select('kho_gas.id', 'kho_gas.ten_kho_ga as ten_phim', 'kho_gas.hinh_anh', 'kho_gas.mo_ta', 'kho_gas.tinh_trang', 'kho_gas.id_the_loai', 'loai_kho_gas.ten_the_loai as the_loai')
             ->limit(8)
             ->get();
 
-        // Phim sắp chiếu (tinh_trang = 1)
-        $phimSapChieu = Phim::where('phims.tinh_trang', 1)
-            ->join('the_loai_phims', 'phims.id_the_loai', '=', 'the_loai_phims.id')
-            ->select('phims.id', 'phims.ten_phim', 'phims.hinh_anh', 'phims.mo_ta', 'phims.tinh_trang', 'phims.id_the_loai', 'the_loai_phims.ten_the_loai as the_loai')
+        // Khô gà sắp bán (tinh_trang = 1)
+        $phimSapChieu = KhoGa::where('kho_gas.tinh_trang', 1)
+            ->join('loai_kho_gas', 'kho_gas.id_the_loai', '=', 'loai_kho_gas.id')
+            ->select('kho_gas.id', 'kho_gas.ten_kho_ga as ten_phim', 'kho_gas.hinh_anh', 'kho_gas.mo_ta', 'kho_gas.tinh_trang', 'kho_gas.id_the_loai', 'loai_kho_gas.ten_the_loai as the_loai')
             ->limit(4)
             ->get();
 
@@ -279,11 +283,11 @@ class PhimController extends Controller
         ]);
     }
 
-    // Client - Danh sách loại khô gà từ bảng phims
+    // Client - Danh sách loại khô gà từ bảng kho_gas
     public function getLoaiKhoGa()
     {
         try {
-            $data = Phim::select('id', 'ten_phim', 'hinh_anh', 'mo_ta', 'tinh_trang', 'rate', 'thoi_luong', 'dien_vien')
+            $data = KhoGa::select('id', 'ten_kho_ga as ten_phim', 'hinh_anh', 'mo_ta', 'tinh_trang', 'rate', 'thoi_luong', 'dien_vien')
                 ->orderBy('id')
                 ->get();
 

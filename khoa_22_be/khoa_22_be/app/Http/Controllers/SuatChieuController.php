@@ -9,9 +9,9 @@ class SuatChieuController extends Controller
 {
     public function getData()
     {
-        $suatChieu = SuatChieu::join('phims', 'phims.id', 'suat_chieus.id_phim')
+        $suatChieu = SuatChieu::join('kho_gas', 'kho_gas.id', 'suat_chieus.id_kho_ga')
             ->join('phong_chieus', 'phong_chieus.id', 'suat_chieus.id_phong_chieu')
-            ->select('suat_chieus.*', 'phims.ten_phim', 'phong_chieus.ten_phong')
+            ->select('suat_chieus.*', 'suat_chieus.id_kho_ga as id_phim', 'kho_gas.ten_kho_ga as ten_phim', 'phong_chieus.ten_phong')
             ->get();
         return response()->json([
             'data' => $suatChieu
@@ -21,7 +21,7 @@ class SuatChieuController extends Controller
     public function addData(Request $request)
     {
         SuatChieu::create([
-            'id_phim'           => $request->id_phim,
+            'id_kho_ga'         => $request->id_kho_ga ?? $request->id_phim,
             'id_phong_chieu'    => $request->id_phong_chieu,
             'ngay_chieu'        => $request->ngay_chieu,
             'thoi_gian_bat_dau' => $request->thoi_gian_bat_dau,
@@ -38,7 +38,7 @@ class SuatChieuController extends Controller
     public function update(Request $request)
     {
         SuatChieu::where('id', $request->id)->update([
-            'id_phim'           => $request->id_phim,
+            'id_kho_ga'         => $request->id_kho_ga ?? $request->id_phim,
             'id_phong_chieu'    => $request->id_phong_chieu,
             'ngay_chieu'        => $request->ngay_chieu,
             'thoi_gian_bat_dau' => $request->thoi_gian_bat_dau,

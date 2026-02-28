@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TheLoaiPhim;
+use App\Models\LoaiKhoGa;
 use Illuminate\Http\Request;
 
-class TheLoaiPhimController extends Controller
+class LoaiKhoGaController extends Controller
 {
     public function getData()
     {
-        $data = TheLoaiPhim::all();
+        $data = LoaiKhoGa::all();
 
         return response()->json([
             'data' => $data
@@ -18,20 +18,20 @@ class TheLoaiPhimController extends Controller
 
     public function addData(Request $request)
     {
-        TheLoaiPhim::create([
+        LoaiKhoGa::create([
             'ten_the_loai'  => $request->ten_the_loai,
             'slug_the_loai' => $request->slug_the_loai,
             'tinh_trang'    => $request->tinh_trang
         ]);
         return response()->json([
             'status' => true,
-            'message' => 'Thêm Thể Loại Phim ' . $request->ten_the_loai . ' thành công',
+            'message' => 'Thêm Loại Khô Gà ' . $request->ten_the_loai . ' thành công',
         ]);
     }
 
     public function update(Request $request)
     {
-        TheLoaiPhim::where('id', $request->id)->update([
+        LoaiKhoGa::where('id', $request->id)->update([
             'ten_the_loai'  => $request->ten_the_loai,
             'slug_the_loai' => $request->slug_the_loai,
             'tinh_trang'    => $request->tinh_trang
@@ -39,23 +39,23 @@ class TheLoaiPhimController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Cập nhật Thể Loại Phim ' . $request->ten_the_loai . ' thành công',
+            'message' => 'Cập nhật Loại Khô Gà ' . $request->ten_the_loai . ' thành công',
         ]);
     }
 
     public function destroy(Request $request)
     {
-        TheLoaiPhim::where('id', $request->id)->delete();
+        LoaiKhoGa::where('id', $request->id)->delete();
 
         return response()->json([
             'status' => true,
-            'message' => 'Xóa Thể Loại Phim thành công',
+            'message' => 'Xóa Loại Khô Gà thành công',
         ]);
     }
 
     public function changeStatus(Request $request)
     {
-        $data = TheLoaiPhim::where('id', $request->id)->first();
+        $data = LoaiKhoGa::where('id', $request->id)->first();
         $data->tinh_trang = !$data->tinh_trang;
         $data->save();
 

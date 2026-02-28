@@ -68,7 +68,7 @@
                             <router-link :to="`/dat-truoc-kho-ga/${product.id}`" class="btn btn-warning px-4 py-2 fw-bold">
                                 <i class="fa-solid fa-ticket me-2"></i>Đặt trước
                             </router-link>
-                            <router-link :to="`/chi-tiet-phim/${product.id}`" class="btn btn-outline-light px-4 py-2 fw-bold">
+                            <router-link :to="`/chi-tiet-kho-ga/${product.id}`" class="btn btn-outline-light px-4 py-2 fw-bold">
                                 <i class="fa-solid fa-eye me-2"></i>Chi Tiết
                             </router-link>
                         </div>

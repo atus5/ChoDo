@@ -299,7 +299,7 @@ export default {
         },
         layDataPhim() {
             axios
-                .get('http://127.0.0.1:8000/api/admin/phim/get-data')
+                .get('http://127.0.0.1:8000/api/admin/kho-ga/get-data')
                 .then(response => {
                     this.list_phim = response.data.data;
                 })

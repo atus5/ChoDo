@@ -199,13 +199,13 @@
 
                             <div class="btn-overlay text-center position-absolute w-100"
                                 style="top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: opacity 0.3s ease;">
-                                <a :href="`/chi-tiet-phim/${value.id}`">
+                                <a :href="`/chi-tiet-kho-ga/${value.id}`">
                                     <button class="btn btn-danger p-2 " style="width: 170px;"><i
                                             class="fa-solid fa-shopping-cart"></i> Mua Ngay
                                     </button>
                                 </a>
                                 <br>
-                                <a :href="`/chi-tiet-phim/${value.id}`">
+                                <a :href="`/chi-tiet-kho-ga/${value.id}`">
                                     <button class="btn btn-outline-light p-2 mt-2" style="width: 170px;"><i
                                             class="fa-solid fa-eye"></i> Chi Tiết
                                     </button>
@@ -362,36 +362,36 @@ export default {
             const fallbackImg = 'https://voz.vn/attachments/542754057_1467285577853420_8471185407916019492_n-jpg.3225827/';
             const statusOk = (res) => res?.data?.status === true || res?.data?.status === 'success';
 
-            // Attempt 1: API endpoint for chi-tiet-phim
+            // Attempt 1: API endpoint for chi-tiet-kho-ga
             try {
-                const resPhim = await axios.get(`/api/client/chi-tiet-phim/get-data/${this.id_phim}`, { timeout: 6000 });
-                if (statusOk(resPhim) && resPhim.data?.data_phim) {
-                    const data = resPhim.data.data_phim;
+                const resPhim = await axios.get(`/api/client/chi-tiet-kho-ga/${this.id_phim}`, { timeout: 6000 });
+                const data = resPhim.data?.data || resPhim.data?.data_phim;
+                if (statusOk(resPhim) && data) {
                     this.chi_tiet_phim = {
                         ...data,
                         hinh_anh: data.hinh_anh || fallbackImg,
-                        ten_phim: data.ten_phim,
-                        thoi_luong: Number(data.thoi_luong || 0),
+                        ten_phim: data.ten_kho_ga || data.ten_phim,
+                        thoi_luong: Number(data.gia || data.thoi_luong || 0),
                         tinh_trang: data.tinh_trang || '4.8/5',
                         rate: data.rate || '36/36',
                         mo_ta: data.mo_ta,
-                        dien_vien: data.dien_vien,
-                        loai_vi: data.the_loai || this.getRandomFlavor(data.id),
-                        kich_thuoc: this.getRandomWeight(data.id),
+                        dien_vien: data.dien_vien || data.thanh_phan,
+                        loai_vi: data.loai_vi || data.the_loai || this.getRandomFlavor(data.id),
+                        kich_thuoc: data.kich_thuoc || this.getRandomWeight(data.id),
                         quoc_gia: data.quoc_gia || '120 Yên Lãng',
-                        nha_cung_cap: data.nha_san_xuat || 'Chộ Đó',
-                        cong_ty: data.nha_san_xuat || 'Công ty TNHH Chộ Đó Foods',
+                        nha_cung_cap: data.nha_cung_cap || data.nha_san_xuat || 'Chộ Đó',
+                        cong_ty: data.cong_ty || data.nha_cung_cap || data.nha_san_xuat || 'Công ty TNHH Chộ Đó Foods',
                     };
                     console.log('Loaded from API:', this.chi_tiet_phim);
                     return;
                 }
             } catch (err) {
-                console.error('API chi-tiet-phim error:', err.message);
+                console.error('API chi-tiet-kho-ga error:', err.message);
             }
 
-            // Attempt 2: Static JSON file (phim-data.json)
+            // Attempt 2: Static JSON file (kho-ga-data.json)
             try {
-                const resStatic = await fetch('/phim-data.json');
+                const resStatic = await fetch('/kho-ga-data.json');
                 if (resStatic.ok) {
                     const jsonData = await resStatic.json();
                     const phimList = jsonData.data || [];
@@ -421,32 +421,32 @@ export default {
                 console.error('Static JSON load error:', err.message);
             }
 
-            // Fallback 3: API endpoint for kho-ga
+            // Fallback 3: API endpoint legacy
             try {
-                const res = await axios.get(`/api/client/chi-tiet-kho-ga/${this.id_phim}`, { timeout: 6000 });
-                if (statusOk(res) && res.data?.data) {
-                    const data = res.data.data;
+                const res = await axios.get(`/api/client/chi-tiet-phim/get-data/${this.id_phim}`, { timeout: 6000 });
+                if (statusOk(res) && res.data?.data_phim) {
+                    const data = res.data.data_phim;
                     this.chi_tiet_phim = {
                         ...data,
                         hinh_anh: data.hinh_anh || fallbackImg,
-                        ten_phim: data.ten_kho_ga,
-                        thoi_luong: Number(data.gia || data.thoi_luong || 0),
+                        ten_phim: data.ten_phim,
+                        thoi_luong: Number(data.thoi_luong || 0),
                         tinh_trang: data.tinh_trang || '4.8/5',
                         rate: data.rate || '36/36',
                         mo_ta: data.mo_ta,
-                        dien_vien: data.dien_vien || data.thanh_phan,
-                        loai_vi: data.loai_vi || this.getRandomFlavor(data.id),
-                        kich_thuoc: data.kich_thuoc || this.getRandomWeight(data.id),
+                        dien_vien: data.dien_vien,
+                        loai_vi: data.the_loai || this.getRandomFlavor(data.id),
+                        kich_thuoc: this.getRandomWeight(data.id),
                         quoc_gia: data.quoc_gia || '120 Yên Lãng',
-                        nha_cung_cap: data.nha_cung_cap || 'Chộ Đó',
-                        cong_ty: data.cong_ty || data.nha_cung_cap || 'Công ty TNHH Chộ Đó Foods',
+                        nha_cung_cap: data.nha_san_xuat || 'Chộ Đó',
+                        cong_ty: data.nha_san_xuat || 'Công ty TNHH Chộ Đó Foods',
                     };
-                    console.log('Loaded from kho-ga API:', this.chi_tiet_phim);
+                    console.log('Loaded from legacy API:', this.chi_tiet_phim);
                 } else {
                     console.warn('No data found - using placeholder');
                 }
             } catch (err) {
-                console.error('Fallback kho-ga error:', err.message);
+                console.error('Fallback legacy error:', err.message);
             }
         },
         binhLuan() {

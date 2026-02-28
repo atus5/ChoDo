@@ -10,11 +10,11 @@ class VeController extends Controller
     public function getData()
     {
         $data = Ve::join('suat_chieus', 'suat_chieus.id', 'ves.id_suat_chieu')
-            ->join('phims', 'phims.id', 'suat_chieus.id_phim')
+            ->join('kho_gas', 'kho_gas.id', 'suat_chieus.id_kho_ga')
             ->join('phong_chieus', 'phong_chieus.id', 'suat_chieus.id_phong_chieu')
             ->join('don_hangs', 'don_hangs.id', 'ves.id_don_dat_ve')
             ->join('khach_hangs', 'khach_hangs.id', 'don_hangs.id_khach_hang')
-            ->select('ves.*', 'phims.ten_phim', 'phong_chieus.ten_phong', 'don_hangs.ma_don_hang', 'suat_chieus.thoi_gian_bat_dau', 'suat_chieus.ngay_chieu', 'khach_hangs.ho_va_ten')
+            ->select('ves.*', 'kho_gas.ten_kho_ga as ten_phim', 'phong_chieus.ten_phong', 'don_hangs.ma_don_hang', 'suat_chieus.thoi_gian_bat_dau', 'suat_chieus.ngay_chieu', 'khach_hangs.ho_va_ten')
             ->get();
         return response()->json([
             'data' => $data

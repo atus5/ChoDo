@@ -65,10 +65,10 @@
                         <!-- Action Buttons Overlay -->
                         <div class="btn-overlay position-absolute w-100 h-100 d-flex align-items-center justify-content-center gap-2" 
                             style="top: 0; left: 0; opacity: 0; transition: opacity 0.3s ease; background: rgba(0,0,0,0.7);">
-                            <router-link :to="`/chi-tiet-phim/${product.id}`" class="btn btn-warning px-4 py-2 fw-bold">
+                            <router-link :to="`/chi-tiet-kho-ga/${product.id}`" class="btn btn-warning px-4 py-2 fw-bold">
                                 <i class="fa-solid fa-ticket me-2"></i>Mua Ngay
                             </router-link>
-                            <router-link :to="`/chi-tiet-phim/${product.id}`" class="btn btn-outline-light px-4 py-2 fw-bold">
+                            <router-link :to="`/chi-tiet-kho-ga/${product.id}`" class="btn btn-outline-light px-4 py-2 fw-bold">
                                 <i class="fa-solid fa-eye me-2"></i>Chi Tiết
                             </router-link>
                         </div>
@@ -106,7 +106,7 @@
                         </div>
 
                         <!-- CTA Button -->
-                        <router-link :to="`/chi-tiet-phim/${product.id}`" class="btn btn-primary mt-3 w-100 fw-bold py-2">
+                        <router-link :to="`/chi-tiet-kho-ga/${product.id}`" class="btn btn-primary mt-3 w-100 fw-bold py-2">
                             <i class="fa-solid fa-shopping-cart me-2"></i>Mua Khô Gà
                         </router-link>
                     </div>
@@ -229,7 +229,7 @@ export default {
 
             // Fallback 2: Lấy từ static JSON file (mock data)
             try {
-                const resStatic = await fetch('/phim-data.json');
+                const resStatic = await fetch('/kho-ga-data.json');
                 if (resStatic.ok) {
                     const data = await resStatic.json();
                     if (statusOk({ data }) && Array.isArray(data.data)) {

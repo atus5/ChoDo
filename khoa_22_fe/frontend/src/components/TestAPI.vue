@@ -35,7 +35,7 @@ export default {
                 headers: axios.defaults.headers.common
             });
 
-            axios.get('/api/admin/phim/get-data')
+            axios.get('/api/admin/kho-ga/get-data')
                 .then((response) => {
                     console.log('API response:', response);
                     this.data = response.data;

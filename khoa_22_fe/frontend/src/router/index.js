@@ -41,13 +41,13 @@ const routes = [
         beforeEnter: checkKhachHang
     },
     {
-        path: "/phim/dang-chieu",
-        component: () => import("../components/Client/Phim/DangChieu/index.vue"),
+        path: "/kho-ga/dang-ban",
+        component: () => import("../components/Client/KhoGa/DangBan/index.vue"),
         meta: { layout: "client" },
     },
     {
-        path: "/phim/sap-chieu",
-        component: () => import("../components/Client/Phim/SapChieu/index.vue"),
+        path: "/kho-ga/sap-ban",
+        component: () => import("../components/Client/KhoGa/SapBan/index.vue"),
         meta: { layout: "client" },
     },
     {
@@ -57,8 +57,8 @@ const routes = [
         props: true,
     },
     {
-        path: "/chi-tiet-phim/:id_phim",
-        component: () => import("../components/Client/ChiTietPhim/index.vue"),
+        path: "/chi-tiet-kho-ga/:id_phim",
+        component: () => import("../components/Client/ChiTietKhoGa/index.vue"),
         meta: { layout: "client" },
         props: true,
     },
@@ -153,8 +153,8 @@ const routes = [
         beforeEnter: checkAdmin,
     },
     {
-        path: "/admin/phim",
-        component: () => import("../components/Admin/Phim/index.vue"),
+        path: "/admin/kho-ga",
+        component: () => import("../components/Admin/KhoGa/index.vue"),
         // beforeEnter: checkAdmin, // Temporarily disabled for testing
         meta: { layout: "default" },
     },
@@ -199,8 +199,8 @@ const routes = [
         beforeEnter: checkAdmin,
     },
     {
-        path: "/admin/danh-gia-phim",
-        component: () => import("../components/Admin/DanhGiaPhim/index.vue"),
+        path: "/admin/danh-gia-kho-ga",
+        component: () => import("../components/Admin/DanhGiaKhoGa/index.vue"),
         beforeEnter: checkAdmin,
     },
 
@@ -227,8 +227,8 @@ const routes = [
         beforeEnter: checkAdmin,
     },
     {
-        path: "/admin/thong-ke/phim",
-        component: () => import("../components/Admin/ThongKe/TKPhim/index.vue"),
+        path: "/admin/thong-ke/kho-ga",
+        component: () => import("../components/Admin/ThongKe/TKKhoGa/index.vue"),
         beforeEnter: checkAdmin,
     },
     {
